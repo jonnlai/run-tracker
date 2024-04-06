@@ -6,6 +6,9 @@
 import gspread
 from google.oauth2.service_account import Credentials
 
+# How to create a table taken from Geeks for geeks: https://www.geeksforgeeks.org/how-to-make-a-table-in-python/
+from tabulate import tabulate
+
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
     "https://www.googleapis.com/auth/drive.file",
@@ -29,9 +32,10 @@ def welcome_user():
         print("1) Select a new training plan")
         print("2) Input exercise data")
         print("3) View your progress\n")
-        selected_option = int(input("What would you like to do? (select 1, 2, or 3): "))
+        
 
         try:
+            selected_option = int(input("What would you like to do? (select 1, 2, or 3): "))
             if selected_option not in [1, 2, 3]:
                 raise ValueError (f"Select an option by typing either 1, 2 or 3. You typed {selected_option}")
         except ValueError as e:
@@ -63,9 +67,7 @@ def select_plan():
         except RuntimeError as e:
             print(f"Invalid data: {e}")
             continue
-        print(user_names)
         break
-
 
     print(f"\nWelcome {user_name}! Please tell us a bit more about you and your goals.")
     
@@ -99,7 +101,7 @@ def select_plan():
     while True:
         
         try:
-            goal = int(input("What distance would you like to be able to run? (5, 10, 15 or 20) "))
+            goal = int(input("What distance (in kilometers) would you like to be able to run: 5, 10, 15 or 20? "))
 
             if goal not in [5, 10, 15, 20]:
                 raise ValueError (f"Select one of the following distances: 5, 10, 15 or 20. You typed {goal}")            
@@ -113,29 +115,51 @@ def select_plan():
         
         break
 
-    plans = SHEET.worksheet("plans").get_all_values()
     # If the user inputs less than 5k as their current max, the programme won't allow them to choose a distance longer than 10k
     # If the user inputs 5-9k, the programme allows them to choose 10k or 15k distance
     # If ther user inputs 10-15k as their current max distance, the programme allows them to choose 15k or 20k
     if max_distance < 5 and goal == 5:
-        print("We recommend you plan 1.")
-        running_record = SHEET.worksheet("user_plans")
-        running_record.append_row([user_name, "plan_1"])
+        plan_number = 1
 
-    elif (max_distance < 5 and goal == 10) or (max_distance < 10 and goal == 10):
-        print("We recommend you plan 2.")
-        running_record = SHEET.worksheet("user_plans")
-        running_record.append_row([user_name, "plan_2"])
+    elif max_distance < 10 and goal == 10:
+        plan_number = 2
 
-    elif (max_distance < 10 and goal == 15) or (max_distance < 15 and goal == 15):
-        print("We recommend you plan 3.")
-        running_record = SHEET.worksheet("user_plans")
-        running_record.append_row([user_name, "plan_3"])
+    elif max_distance < 15 and goal == 15:
+        plan_number = 3
 
     elif max_distance <= 15 and goal == 20:
-        print("We recommend you plan 4.")
-        running_record = SHEET.worksheet("user_plans")
-        running_record.append_row([user_name, "plan_4"])
+        plan_number = 4
+        
+    print(f"We recommend you plan {plan_number}.\n")
+    running_record = SHEET.worksheet("user_plans")
+    running_record.append_row([user_name, plan_number])
+
+    display_plan(plan_number)
+
+def display_plan(plan_number):
+    plans = SHEET.worksheet("plans")
+    plan_data = plans.col_values(plan_number)
     
+    header = ["Week", "Day 1", "Day 2", "Day 3"]
+
+    data = [
+        ["Week 1", plan_data[1], plan_data[2], plan_data[3]],
+        ["Week 2", plan_data[4], plan_data[5], plan_data[6]],
+        ["Week 3", plan_data[7], plan_data[8], plan_data[9]],
+        ["Week 4", plan_data[10], plan_data[11], plan_data[12]],
+        ["Week 5", plan_data[13], plan_data[14], plan_data[15]],
+        ["Week 6", plan_data[16], plan_data[17], plan_data[18]],
+        ["Week 7", plan_data[19], plan_data[20], plan_data[21]],
+        ["Week 8", plan_data[22], plan_data[23], plan_data[24]]
+    ]
+
+    training_plan = tabulate(data, headers=header, tablefmt="grid")
+    print("We recommend that you run three days a week ensuring that you leave at least one rest day inbetween each run.\nFor example you would run every Monday, Wednesday and Saturday.")
+    print("Here is your training plan:\n")
+    print(training_plan)
+    print("\nPlease return next week to input that week's results.")
+
+
+
 
 welcome_user()
