@@ -20,6 +20,10 @@ SCOPED_CREDS = CREDS.with_scopes(SCOPE)
 GSPREAD_CLIENT = gspread.authorize(SCOPED_CREDS)
 SHEET = GSPREAD_CLIENT.open('run-tracker')
 
+RESULTS = SHEET.worksheet("results")
+PLANS = SHEET.worksheet("plans")
+SELECTED_PLANS = SHEET.worksheet("user_plans")
+
 def welcome_user():
     """
     Display welcome message 
@@ -48,8 +52,8 @@ def welcome_user():
         select_plan()
     elif selected_option == 2:
         input_data()
-    # elif selected_option == 3:
-    #     view_progress()
+    elif selected_option == 3:
+        view_progress()
 
         
 def select_plan():
@@ -128,8 +132,7 @@ def select_plan():
         plan_number = 4
         
     print(f"We recommend you plan {plan_number}.\n")
-    running_record = SHEET.worksheet("user_plans")
-    running_record.append_row([user_name, plan_number])
+    SELECTED_PLANS.append_row([user_name, plan_number])
     results = SHEET.worksheet("results")
     results.append_row([user_name])
 
@@ -221,7 +224,7 @@ def input_data():
                     # Add the running data the user has inputted on the results worksheet
                     for data in running_data:
                         next_result = len(results.row_values(user_row))+1 # Get the number of values recorded and add one to indicate where the next result is added
-                        results.update_cell(user_row, next_result, data)
+                        results.update_cell(user_row, next_result, data) # Update the next empty cell using row and column coordinates
                 elif check_input == "n":
                     continue
         break
@@ -240,12 +243,47 @@ def input_data():
             if quit == "q":
                 welcome_user()
 
+def view_progress():
+    user_names = SHEET.worksheet("user_plans").col_values(1)
 
+    user_name = input("Please enter your registered username: ")
+    
+    # Check that the username given is a registred username
+    if user_name not in user_names:
+        print(f"{user_name} is not a registered username")
 
-                    
-
+        try:
+            choice = input("Type 'again' to try again or 'return' to return to the main page: ")
             
+            if choice != "again" and choice != "return":
+                raise ValueError (f"Expect either the word 'again' or 'return'. You typed {choice}")
+        except ValueError as e:
+            print(f"Invalid choice: {e}, please try again.")
+        else:
+            if choice == "again":
+                user_name = input("Please enter your registered username: ")
+            elif choice == "return":
+                welcome_user()
+    
+    user_row = RESULTS.find(user_name).row # Get the row number of the user record
+    user_data = RESULTS.row_values(user_row)
+    no_of_weeks = int((len(RESULTS.row_values(user_row))-1) / 3) # Divide the number of results by three to get the number of weeks (3 runs per week, remove the cell that contains username)
 
+    print(f"\nYou have been following this 8 week programme for {no_of_weeks} weeks.")
+    print("Here are your results so far:\n")
+    
+    header = ["Week", "Day 1", "Day 2", "Day 3"]
 
+    data = []
+
+    week = 1
+    activity = 1
+    while week <= no_of_weeks:
+        data.append([f"Week {week}", user_data[activity], user_data[activity+1], user_data[activity+2]])
+        week += 1
+        activity += 3
+
+    user_results = tabulate(data, headers=header, tablefmt="grid")
+    print(user_results)
 
 welcome_user()
