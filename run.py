@@ -149,6 +149,7 @@ def display_plan(plan_number):
 
     # training_plan = tabulate(data, headers=header, tablefmt="grid")
 
+    
     header = ["Week", "Day 1", "Day 2", "Day 3"]
 
     data = []
@@ -161,7 +162,6 @@ def display_plan(plan_number):
         activity += 3
 
     training_plan = tabulate(data, headers=header, tablefmt="grid")
-    print(training_plan)
 
     print("We recommend that you run three days a week ensuring that you leave at least one rest day inbetween each run.\nFor example you would run every Monday, Wednesday and Saturday.\n")
     print("Here is your training plan:\n")
