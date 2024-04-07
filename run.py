@@ -48,13 +48,7 @@ def welcome_user():
 
         break
 
-    if selected_option == 1:
-        select_plan()
-    elif selected_option == 2:
-        input_data()
-    elif selected_option == 3:
-        view_progress()
-
+    return selected_option
         
 def select_plan():
     """
@@ -129,10 +123,10 @@ def select_plan():
         plan_number = 4
         
     print(f"We recommend you plan {plan_number}.\n")
-    SELECTED_PLANS.append_row([user_name, plan_number])
-    RESULTS.append_row([user_name])
+    SELECTED_PLANS.append_row([user_name, plan_number]) # Add username and plan number to the selected plans worksheet
+    RESULTS.append_row([user_name]) # Add username to the results worksheet
 
-    display_plan(plan_number)
+    return plan_number
 
 def display_plan(plan_number):
     """
@@ -222,7 +216,8 @@ def input_data():
                     continue
         break
 
-    print("Thank you for adding your last week's running results!\nKeep on running and don't forget to come back next week to add your results!")
+    print("\nThank you for adding your last week's running results!")
+    print("Keep on running and don't forget to come back next week to add your results!\n")
         
     while True:
         quit = input("Type q to quit this programme: ")    
@@ -278,4 +273,22 @@ def view_progress():
     user_results = tabulate(data, headers=header, tablefmt="grid")
     print(user_results)
 
-welcome_user()
+def main():
+    """
+    Function to run all the other functions
+    """
+    selected_option = welcome_user()
+    
+    if selected_option == 1:
+        plan_number = select_plan()
+        display_plan(plan_number)
+    elif selected_option == 2:
+        input_data()
+    elif selected_option == 3:
+        view_progress()
+
+    
+
+
+
+main()
