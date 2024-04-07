@@ -134,20 +134,35 @@ def display_plan(plan_number):
     """
     plan_data = PLANS.row_values(plan_number)
     
+    # header = ["Week", "Day 1", "Day 2", "Day 3"]
+
+    # data = [
+    #     ["Week 1", plan_data[1], plan_data[2], plan_data[3]],
+    #     ["Week 2", plan_data[4], plan_data[5], plan_data[6]],
+    #     ["Week 3", plan_data[7], plan_data[8], plan_data[9]],
+    #     ["Week 4", plan_data[10], plan_data[11], plan_data[12]],
+    #     ["Week 5", plan_data[13], plan_data[14], plan_data[15]],
+    #     ["Week 6", plan_data[16], plan_data[17], plan_data[18]],
+    #     ["Week 7", plan_data[19], plan_data[20], plan_data[21]],
+    #     ["Week 8", plan_data[22], plan_data[23], plan_data[24]]
+    # ]
+
+    # training_plan = tabulate(data, headers=header, tablefmt="grid")
+
     header = ["Week", "Day 1", "Day 2", "Day 3"]
 
-    data = [
-        ["Week 1", plan_data[1], plan_data[2], plan_data[3]],
-        ["Week 2", plan_data[4], plan_data[5], plan_data[6]],
-        ["Week 3", plan_data[7], plan_data[8], plan_data[9]],
-        ["Week 4", plan_data[10], plan_data[11], plan_data[12]],
-        ["Week 5", plan_data[13], plan_data[14], plan_data[15]],
-        ["Week 6", plan_data[16], plan_data[17], plan_data[18]],
-        ["Week 7", plan_data[19], plan_data[20], plan_data[21]],
-        ["Week 8", plan_data[22], plan_data[23], plan_data[24]]
-    ]
+    data = []
+
+    week = 1
+    activity = 1
+    while week <= 8:
+        data.append([f"Week {week}", plan_data[activity], plan_data[activity+1], plan_data[activity+2]])
+        week += 1
+        activity += 3
 
     training_plan = tabulate(data, headers=header, tablefmt="grid")
+    print(training_plan)
+
     print("We recommend that you run three days a week ensuring that you leave at least one rest day inbetween each run.\nFor example you would run every Monday, Wednesday and Saturday.\n")
     print("Here is your training plan:\n")
     print(training_plan)
@@ -155,19 +170,21 @@ def display_plan(plan_number):
 
 def check_username():
     """
-    Ask the user to input their username and check it has been registered before
+    Ask the user to input their username and check whether it has been registered before
     """
     while True: 
-            try:
-                user_name = input("Please enter your registered username or type 'q' to quit: ")
-                # Check that the username given is a registred username
-                if user_name not in USER_NAMES and user_name != "q":
-                    raise ValueError (f"{user_name} is not a registered username")
-            except ValueError as e:
-                print(f"Invalid choice: {e}, please try again or type 'q' to quit")
-                continue
-            else: 
-                return user_name 
+        try:
+            user_name = input("Please enter your registered username or type 'q' to quit: ")
+            # Check that the username given is a registred username
+            if user_name not in USER_NAMES and user_name != "q":
+                raise ValueError (f"{user_name} is not a registered username")
+        except ValueError as e:
+            print(f"Invalid choice: {e}, please try again or type 'q' to quit")
+            continue
+        else: 
+            if user_name == "q":
+                welcome_user()
+            return user_name 
 
 def input_data(user_name):
     """
@@ -205,10 +222,10 @@ def input_data(user_name):
                 if check_input == "y":
                     user_row = RESULTS.find(user_name).row # Get the row number of the user record
                     
-                    # Add the running data the user has inputted on the results worksheet
+                    # Add the running data the user has inputted in the results worksheet
                     for data in running_data:
                         next_result = len(RESULTS.row_values(user_row))+1 # Get the number of values recorded and add one to indicate where the next result is added
-                        RESULTS.update_cell(user_row, next_result, data) # Update the next empty cell using row and column coordinates
+                        RESULTS.update_cell(user_row, next_result, data) # Add the inputted data into the next empty cell using row and column coordinates
                 elif check_input == "n":
                     continue
         break
