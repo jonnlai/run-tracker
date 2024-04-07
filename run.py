@@ -46,8 +46,8 @@ def welcome_user():
 
     if selected_option == 1:
         select_plan()
-    # elif selected_option == 2:
-    #     input_data()
+    elif selected_option == 2:
+        input_data()
     # elif selected_option == 3:
     #     view_progress()
 
@@ -120,25 +120,27 @@ def select_plan():
     # If ther user inputs 10-15k as their current max distance, the programme allows them to choose 15k or 20k
     if max_distance < 5 and goal == 5:
         plan_number = 1
-
     elif max_distance < 10 and goal == 10:
         plan_number = 2
-
     elif max_distance < 15 and goal == 15:
         plan_number = 3
-
-    elif max_distance <= 15 and goal == 20:
+    else:
         plan_number = 4
         
     print(f"We recommend you plan {plan_number}.\n")
     running_record = SHEET.worksheet("user_plans")
     running_record.append_row([user_name, plan_number])
+    results = SHEET.worksheet("results")
+    results.append_row([user_name])
 
     display_plan(plan_number)
 
 def display_plan(plan_number):
+    """
+    Displays the training plan in a tablet format
+    """
     plans = SHEET.worksheet("plans")
-    plan_data = plans.col_values(plan_number)
+    plan_data = plans.row_values(plan_number)
     
     header = ["Week", "Day 1", "Day 2", "Day 3"]
 
@@ -154,11 +156,95 @@ def display_plan(plan_number):
     ]
 
     training_plan = tabulate(data, headers=header, tablefmt="grid")
-    print("We recommend that you run three days a week ensuring that you leave at least one rest day inbetween each run.\nFor example you would run every Monday, Wednesday and Saturday.")
+    print("We recommend that you run three days a week ensuring that you leave at least one rest day inbetween each run.\nFor example you would run every Monday, Wednesday and Saturday.\n")
     print("Here is your training plan:\n")
     print(training_plan)
-    print("\nPlease return next week to input that week's results.")
+    print("\nPlease return next week to input that week's results.\n")
 
+def input_data():
+    """
+    Allow user to input their last week's i.e. last three days' training data.
+    Check that they have a registered username and that are inputting 3 integers as their training data values
+    """
+    print("Welcome back! Hope you enjoyed running last week!")
+    user_names = SHEET.worksheet("user_plans").col_values(1)
+
+    user_name = input("Please enter your registered username: ")
+    
+    # Check that the username given is a registred username
+    if user_name not in user_names:
+        print(f"{user_name} is not a registered username")
+
+        try:
+            choice = input("Type 'again' to try again or 'return' to return to the main page: ")
+            
+            if choice != "again" and choice != "return":
+                raise ValueError (f"Expect either the word 'again' or 'return'. You typed {choice}")
+        except ValueError as e:
+            print(f"Invalid choice: {e}, please try again.")
+        else:
+            if choice == "again":
+                user_name = input("Please enter your registered username: ")
+            elif choice == "return":
+                welcome_user()
+
+    # Validate the running date the user gives
+    # How to validate the data the user inputs taken from Code Institute's Love Sandwiches project
+    while True:
+        print("Please enter your running data from last week i.e. your last three runs.")
+        print("You should type three numbers, separated by commas.\nIf you missed a run, you should indicate that by typing 0.")
+        print("For example: 3,0,2")
+
+        runs_input = input("Please enter your running data here: \n")
+        running_data = runs_input.split(",")
+
+        try:
+            [int(run) for run in running_data]
+            if len(running_data) != 3:
+                raise ValueError (f"Three values required, you provided {len(running_data)}")
+        except ValueError as e:
+            print(f"Invalid data: {e}, please try again.\n")
+            continue
+        else:
+            check_input = input(f"You typed: {running_data}. Are these correct? (y/n) ") # Ask the user to confirm the data
+            try:
+                if check_input != "y" and check_input != "n":
+                    raise ValueError (f"Type 'y' to confirm the data is correct or 'n' to re-type the data")
+            except ValueError as e:
+                print(f"Invalid selection: {e}, please try again.")
+                check_input = input(f"You typed: {running_data}. Are these correct? (y/n) ")
+            else:
+                if check_input == "y":
+                    results = SHEET.worksheet("results")
+                    user_row = results.find(user_name).row # Get the row number of the user record
+                    
+                    # Add the running data the user has inputted on the results worksheet
+                    for data in running_data:
+                        next_result = len(results.row_values(user_row))+1 # Get the number of values recorded and add one to indicate where the next result is added
+                        results.update_cell(user_row, next_result, data)
+                elif check_input == "n":
+                    continue
+        break
+
+    print("Thank you for adding your last week's running results!\nKeep on running and don't forget to come back next week to add your results!")
+        
+    while True:
+        quit = input("Type q to quit this programme: ")    
+        try:  
+            if quit != "q":
+                raise ValueError (f"Expected the letter q. You typed {quit}")
+        except ValueError as e:
+            print(f"Invalid data: {e}, please try again.")
+            continue
+        else:
+            if quit == "q":
+                welcome_user()
+
+
+
+                    
+
+            
 
 
 
