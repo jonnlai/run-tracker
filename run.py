@@ -153,31 +153,28 @@ def display_plan(plan_number):
     print(training_plan)
     print("\nPlease return next week to input that week's results.\n")
 
-def input_data():
+def check_username():
+    """
+    Ask the user to input their username and check it has been registered before
+    """
+    while True: 
+            try:
+                user_name = input("Please enter your registered username or type 'q' to quit: ")
+                # Check that the username given is a registred username
+                if user_name not in USER_NAMES and user_name != "q":
+                    raise ValueError (f"{user_name} is not a registered username")
+            except ValueError as e:
+                print(f"Invalid choice: {e}, please try again or type 'q' to quit")
+                continue
+            else: 
+                return user_name 
+
+def input_data(user_name):
     """
     Allow user to input their last week's i.e. last three days' training data.
     Check that they have a registered username and that are inputting 3 integers as their training data values
     """
     print("\nWelcome back! Hope you enjoyed running last week!")
-
-    user_name = input("Please enter your registered username: ")
-    
-    # Check that the username given is a registred username
-    if user_name not in USER_NAMES:
-        print(f"{user_name} is not a registered username")
-
-        try:
-            choice = input("Type 'again' to try again or 'return' to return to the main page: ")
-            
-            if choice != "again" and choice != "return":
-                raise ValueError (f"Expect either the word 'again' or 'return'. You typed {choice}")
-        except ValueError as e:
-            print(f"Invalid choice: {e}, please try again.")
-        else:
-            if choice == "again":
-                user_name = input("Please enter your registered username: ")
-            elif choice == "return":
-                welcome_user()
 
     # Validate the running date the user gives
     # How to validate the data the user inputs taken from Code Institute's Love Sandwiches project
@@ -231,26 +228,7 @@ def input_data():
             if quit == "q":
                 welcome_user()
 
-def view_progress():
-
-    user_name = input("Please enter your registered username: ")
-    
-    # Check that the username given is a registred username
-    if user_name not in USER_NAMES:
-        print(f"{user_name} is not a registered username")
-
-        try:
-            choice = input("Type 'again' to try again or 'return' to return to the main page: ")
-            
-            if choice != "again" and choice != "return":
-                raise ValueError (f"Expect either the word 'again' or 'return'. You typed {choice}")
-        except ValueError as e:
-            print(f"Invalid choice: {e}, please try again.")
-        else:
-            if choice == "again":
-                user_name = input("Please enter your registered username: ")
-            elif choice == "return":
-                welcome_user()
+def view_progress(user_name):
     
     user_row = RESULTS.find(user_name).row # Get the row number of the user record
     user_data = RESULTS.row_values(user_row)
@@ -283,9 +261,11 @@ def main():
         plan_number = select_plan()
         display_plan(plan_number)
     elif selected_option == 2:
-        input_data()
+        user_name = check_username()
+        input_data(user_name)
     elif selected_option == 3:
-        view_progress()
+        user_name = check_username()
+        view_progress(user_name)
 
     
 
