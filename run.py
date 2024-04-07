@@ -23,21 +23,21 @@ SHEET = GSPREAD_CLIENT.open('run-tracker')
 RESULTS = SHEET.worksheet("results")
 PLANS = SHEET.worksheet("plans")
 SELECTED_PLANS = SHEET.worksheet("user_plans")
+USER_NAMES = SHEET.worksheet("user_plans").col_values(1)
 
 def welcome_user():
     """
     Display welcome message 
     Ask the user to select an option
     """
-    print("Welcome to Run Tracker!\n")
-    print("With these training programmes you can learn to run 5-20 kilometers\nPick a training programme and track your progress!\n")
+    print("\nWelcome to Run Tracker!\n")
+    print("With these training programmes you can learn to run 5, 10, 15 or 20 kilometers.\nPick a training programme and track your progress!\n")
 
     while True:
         print("1) Select a new training plan")
         print("2) Input exercise data")
         print("3) View your progress\n")
         
-
         try:
             selected_option = int(input("What would you like to do? (select 1, 2, or 3): "))
             if selected_option not in [1, 2, 3]:
@@ -61,12 +61,10 @@ def select_plan():
     Get more information about the user's goals and propose a plan
     Raise a ValueError if invalid distance is given
     """
-    user_names = SHEET.worksheet("user_plans").col_values(1)
-
     while True:
         try:
             user_name = input("Please select a user name: ")
-            if user_name in user_names:
+            if user_name in USER_NAMES:
                 raise RuntimeError (f"Username {user_name} already in use. Please select another username")
         except RuntimeError as e:
             print(f"Invalid data: {e}")
@@ -76,7 +74,6 @@ def select_plan():
     print(f"\nWelcome {user_name}! Please tell us a bit more about you and your goals.")
     
     while True:
-
         try:
             max_distance = int(input("What is the maximum distance in kilometers that you can run comfortably without stopping? (0 - 15) "))
             if max_distance < 0:
@@ -133,8 +130,7 @@ def select_plan():
         
     print(f"We recommend you plan {plan_number}.\n")
     SELECTED_PLANS.append_row([user_name, plan_number])
-    results = SHEET.worksheet("results")
-    results.append_row([user_name])
+    RESULTS.append_row([user_name])
 
     display_plan(plan_number)
 
@@ -142,8 +138,7 @@ def display_plan(plan_number):
     """
     Displays the training plan in a tablet format
     """
-    plans = SHEET.worksheet("plans")
-    plan_data = plans.row_values(plan_number)
+    plan_data = PLANS.row_values(plan_number)
     
     header = ["Week", "Day 1", "Day 2", "Day 3"]
 
@@ -169,13 +164,12 @@ def input_data():
     Allow user to input their last week's i.e. last three days' training data.
     Check that they have a registered username and that are inputting 3 integers as their training data values
     """
-    print("Welcome back! Hope you enjoyed running last week!")
-    user_names = SHEET.worksheet("user_plans").col_values(1)
+    print("\nWelcome back! Hope you enjoyed running last week!")
 
     user_name = input("Please enter your registered username: ")
     
     # Check that the username given is a registred username
-    if user_name not in user_names:
+    if user_name not in USER_NAMES:
         print(f"{user_name} is not a registered username")
 
         try:
@@ -194,9 +188,9 @@ def input_data():
     # Validate the running date the user gives
     # How to validate the data the user inputs taken from Code Institute's Love Sandwiches project
     while True:
-        print("Please enter your running data from last week i.e. your last three runs.")
+        print("\nPlease enter your running data from last week i.e. your last three runs.")
         print("You should type three numbers, separated by commas.\nIf you missed a run, you should indicate that by typing 0.")
-        print("For example: 3,0,2")
+        print("For example: 3,0,2\n")
 
         runs_input = input("Please enter your running data here: \n")
         running_data = runs_input.split(",")
@@ -218,13 +212,12 @@ def input_data():
                 check_input = input(f"You typed: {running_data}. Are these correct? (y/n) ")
             else:
                 if check_input == "y":
-                    results = SHEET.worksheet("results")
-                    user_row = results.find(user_name).row # Get the row number of the user record
+                    user_row = RESULTS.find(user_name).row # Get the row number of the user record
                     
                     # Add the running data the user has inputted on the results worksheet
                     for data in running_data:
-                        next_result = len(results.row_values(user_row))+1 # Get the number of values recorded and add one to indicate where the next result is added
-                        results.update_cell(user_row, next_result, data) # Update the next empty cell using row and column coordinates
+                        next_result = len(RESULTS.row_values(user_row))+1 # Get the number of values recorded and add one to indicate where the next result is added
+                        RESULTS.update_cell(user_row, next_result, data) # Update the next empty cell using row and column coordinates
                 elif check_input == "n":
                     continue
         break
@@ -244,12 +237,11 @@ def input_data():
                 welcome_user()
 
 def view_progress():
-    user_names = SHEET.worksheet("user_plans").col_values(1)
 
     user_name = input("Please enter your registered username: ")
     
     # Check that the username given is a registred username
-    if user_name not in user_names:
+    if user_name not in USER_NAMES:
         print(f"{user_name} is not a registered username")
 
         try:
