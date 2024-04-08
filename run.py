@@ -49,17 +49,36 @@ def welcome_user():
         break
 
     return selected_option
-        
+
+def return_to_start():
+    """
+    Function to allow the user to return to the start page
+    """
+    while True:
+        quit = input("Type 'q' to quit this programme: ").lower()
+        try:
+            if quit != "q":
+                raise ValueError (f"Expected the letter 'q'. You typed {quit}")
+        except ValueError as e:
+            print(f"Invalid data: {e}, please try again.")
+            continue
+        else:
+            if quit == "q":
+                welcome_user()
+
 def select_plan():
     """
     Get more information about the user's goals and propose a plan
     Raise a ValueError if invalid distance is given
     """
+    print("Please select a username that is 3-20 characters long and in lower case.")
     while True:
         try:
-            user_name = input("Please select a user name: ")
+            user_name = input("Please select a user name: ").strip().lower()
             if user_name in USER_NAMES:
                 raise RuntimeError (f"Username {user_name} already in use. Please select another username")
+            if len(user_name) < 3 or len(user_name) > 20:
+                raise RuntimeError (f"Username needs to be 3-15 characters long. You typed {user_name} which is {len(user_name)} characters long.") 
         except RuntimeError as e:
             print(f"Invalid data: {e}")
             continue
@@ -78,18 +97,7 @@ def select_plan():
         
         if max_distance > 15:
             print("You are already a very strong runner! Congratulations!\nThis programme is designed for people who can run less than 15 kilometers.\nWe recommend that you join a more advanced running programme.")
-
-            while True:
-                quit = input("Type q to quit this programme: ")    
-                try:
-                    if quit != "q":
-                        raise ValueError (f"Expected the letter q. You typed {quit}")
-                except ValueError as e:
-                    print(f"Invalid data: {e}, please try again.")
-                    continue
-                else:
-                    if quit == "q":
-                        welcome_user()
+            return_to_start()
 
         break
         
@@ -134,22 +142,6 @@ def display_plan(plan_number):
     """
     plan_data = PLANS.row_values(plan_number)
     
-    # header = ["Week", "Day 1", "Day 2", "Day 3"]
-
-    # data = [
-    #     ["Week 1", plan_data[1], plan_data[2], plan_data[3]],
-    #     ["Week 2", plan_data[4], plan_data[5], plan_data[6]],
-    #     ["Week 3", plan_data[7], plan_data[8], plan_data[9]],
-    #     ["Week 4", plan_data[10], plan_data[11], plan_data[12]],
-    #     ["Week 5", plan_data[13], plan_data[14], plan_data[15]],
-    #     ["Week 6", plan_data[16], plan_data[17], plan_data[18]],
-    #     ["Week 7", plan_data[19], plan_data[20], plan_data[21]],
-    #     ["Week 8", plan_data[22], plan_data[23], plan_data[24]]
-    # ]
-
-    # training_plan = tabulate(data, headers=header, tablefmt="grid")
-
-    
     header = ["Week", "Day 1", "Day 2", "Day 3"]
 
     data = []
@@ -166,7 +158,7 @@ def display_plan(plan_number):
     print("We recommend that you run three days a week ensuring that you leave at least one rest day inbetween each run.\nFor example you would run every Monday, Wednesday and Saturday.\n")
     print("Here is your training plan:\n")
     print(training_plan)
-    print("\nPlease return next week to input that week's results.\n")
+    print("\nPlease return once a week to input that week's results.\n")
 
 def check_username():
     """
@@ -174,7 +166,7 @@ def check_username():
     """
     while True: 
         try:
-            user_name = input("Please enter your registered username or type 'q' to quit: ")
+            user_name = input("Please enter your registered username or type 'q' to quit: ").lower()
             # Check that the username given is a registred username
             if user_name not in USER_NAMES and user_name != "q":
                 raise ValueError (f"{user_name} is not a registered username")
@@ -191,7 +183,7 @@ def input_data(user_name):
     Allow user to input their last week's i.e. last three days' training data.
     Check that they have a registered username and that are inputting 3 integers as their training data values
     """
-    print("\nWelcome back! Hope you enjoyed running last week!")
+    print(f"\nWelcome back, {user_name}! Hope you enjoyed running last week!")
 
     # Validate the running date the user gives
     # How to validate the data the user inputs taken from Code Institute's Love Sandwiches project
@@ -211,13 +203,13 @@ def input_data(user_name):
             print(f"Invalid data: {e}, please try again.\n")
             continue
         else:
-            check_input = input(f"You typed: {running_data}. Are these correct? (y/n) ") # Ask the user to confirm the data
             try:
+                check_input = input(f"You typed: {running_data}. Are these correct? (y/n) ").lower() # Ask the user to confirm the data
                 if check_input != "y" and check_input != "n":
                     raise ValueError (f"Type 'y' to confirm the data is correct or 'n' to re-type the data")
             except ValueError as e:
                 print(f"Invalid selection: {e}, please try again.")
-                check_input = input(f"You typed: {running_data}. Are these correct? (y/n) ")
+                continue
             else:
                 if check_input == "y":
                     user_row = RESULTS.find(user_name).row # Get the row number of the user record
@@ -234,10 +226,10 @@ def input_data(user_name):
     print("Keep on running and don't forget to come back next week to add your results!\n")
         
     while True:
-        quit = input("Type q to quit this programme: ")    
+        quit = input("Type 'q' to quit this programme: ").lower()
         try:  
             if quit != "q":
-                raise ValueError (f"Expected the letter q. You typed {quit}")
+                raise ValueError (f"Expected the letter 'q'. You typed {quit}")
         except ValueError as e:
             print(f"Invalid data: {e}, please try again.")
             continue
