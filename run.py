@@ -64,7 +64,7 @@ def return_to_start():
             continue
         else:
             if quit == "q":
-                welcome_user()
+                main()
 
 def select_plan():
     """
@@ -101,11 +101,9 @@ def select_plan():
 
         break
         
-    while True:
-        
+    while True:        
         try:
             goal = int(input("What distance (in kilometers) would you like to be able to run: 5, 10, 15 or 20? "))
-
             if goal not in [5, 10, 15, 20]:
                 raise ValueError (f"Select one of the following distances: 5, 10, 15 or 20. You typed {goal}")            
             if goal <= max_distance:
@@ -175,7 +173,7 @@ def check_username():
             continue
         else: 
             if user_name == "q":
-                welcome_user()
+                main()
             return user_name 
 
 def input_data(user_name):
@@ -222,34 +220,46 @@ def input_data(user_name):
                     continue
         break
 
-    print("\nThank you for adding your last week's running results!")
+    print("\nThank you for adding your latest running results!")
     print("Keep on running and don't forget to come back next week to add your results!\n")
-        
-    while True:
-        quit = input("Type 'q' to quit this programme: ").lower()
-        try:  
-            if quit != "q":
-                raise ValueError (f"Expected the letter 'q'. You typed {quit}")
-        except ValueError as e:
-            print(f"Invalid data: {e}, please try again.")
-            continue
-        else:
-            if quit == "q":
-                welcome_user()
+
+def display_next_week(user_name):
+    
+    user_row = SELECTED_PLANS.find(user_name).row # Get the row number of the user record
+    plan_number = SELECTED_PLANS.row_values(user_row)[1] # Get the number of the user's plan. All plan numbers are stored in column 2
+
+    next_activity = int((len(RESULTS.row_values(user_row)))) # Get the number of activities recorded by the user + 1
+    next_week = PLANS.row_values(plan_number)[next_activity:next_activity+3] # Get the next three activities from the list
+
+    header = ["Week", "Day 1", "Day 2", "Day 3"]
+
+    data = []
+
+    data.append([f"Week {int((next_activity-1)/3+1)}", next_week[0], next_week[1], next_week[2]])
+
+    next_week_plan = tabulate(data, headers=header, tablefmt="grid")
+    
+    print(f"\nYou have been following this 8 week programme for {int((next_activity-1)/3)} week(s).")
+    print("Here is your next week's plan:\n")
+    print(next_week_plan)
 
 def view_progress(user_name):
+    """
+    Display a table that shows all the data the user has recorded
+    """
     
     user_row = RESULTS.find(user_name).row # Get the row number of the user record
     user_data = RESULTS.row_values(user_row)
     no_of_weeks = int((len(RESULTS.row_values(user_row))-1) / 3) # Divide the number of results by three to get the number of weeks (3 runs per week, remove the cell that contains username)
 
-    print(f"\nYou have been following this 8 week programme for {no_of_weeks} weeks.")
+    print(f"\nYou have been following this 8 week programme for {no_of_weeks} week(s).")
     print("Here are your results so far:\n")
     
     header = ["Week", "Day 1", "Day 2", "Day 3"]
 
     data = []
 
+    # Create a list of lists of each week's results
     week = 1
     activity = 1
     while week <= no_of_weeks:
@@ -271,13 +281,12 @@ def main():
         display_plan(plan_number)
     elif selected_option == 2:
         user_name = check_username()
-        input_data(user_name)
+        input_data(user_name)            
+        display_next_week(user_name)
     elif selected_option == 3:
         user_name = check_username()
         view_progress(user_name)
-
-    
-
-
+        
+    return_to_start()
 
 main()
