@@ -36,7 +36,7 @@ def welcome_user():
     while True:
         print("1) Select a new training plan")
         print("2) Input exercise data")
-        print("3) View your progress\n")
+        print("3) View your progress and plan\n")
         
         try:
             selected_option = int(input("What would you like to do? (select 1, 2, or 3): "))
@@ -224,7 +224,10 @@ def input_data(user_name):
     print("Keep on running and don't forget to come back next week to add your results!\n")
 
 def display_next_week(user_name):
-    
+    """
+    Display next week's training plan to the user
+    """
+
     user_row = SELECTED_PLANS.find(user_name).row # Get the row number of the user record
     plan_number = SELECTED_PLANS.row_values(user_row)[1] # Get the number of the user's plan. All plan numbers are stored in column 2
 
@@ -247,10 +250,11 @@ def view_progress(user_name):
     """
     Display a table that shows all the data the user has recorded
     """
-    
     user_row = RESULTS.find(user_name).row # Get the row number of the user record
     user_data = RESULTS.row_values(user_row)
     no_of_weeks = int((len(RESULTS.row_values(user_row))-1) / 3) # Divide the number of results by three to get the number of weeks (3 runs per week, remove the cell that contains username)
+    user_row = SELECTED_PLANS.find(user_name).row # Get the row number of the user record
+    plan_number = SELECTED_PLANS.row_values(user_row)[1] # Get the number of the user's plan. All plan numbers are stored in column 2
 
     print(f"\nYou have been following this 8 week programme for {no_of_weeks} week(s).")
     print("Here are your results so far:\n")
@@ -269,6 +273,20 @@ def view_progress(user_name):
 
     user_results = tabulate(data, headers=header, tablefmt="grid")
     print(user_results)
+
+    while True:
+        try:
+            view_plan = input("Would you like to view your plan? (y/n) ").lower()
+            if view_plan != "y" and view_plan != "n":
+                raise ValueError (f"Expected the letter 'y' or 'n'. You entered {view_plan}")
+        except ValueError as e:
+            print(f"Invalid option: {e}, please try again.")
+            continue
+        else:
+            if view_plan =="y":
+                display_plan(plan_number)
+            else:
+                break
 
 def main():
     """
