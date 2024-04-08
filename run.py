@@ -176,13 +176,27 @@ def check_username():
                 main()
             return user_name 
 
+def check_week(user_name):
+    """
+    Check how many weeks of programme the user has completed.
+    End the programme if they have completed 8 weeks already
+    """
+    user_row = RESULTS.find(user_name).row # Get the row number of the user record
+    no_of_weeks = int((len(RESULTS.row_values(user_row))-1) / 3) # Divide the number of results by three to get the number of weeks (3 runs per week, remove the cell that contains username)
+
+    if no_of_weeks == 8:
+        print(f"Well done, {user_name}! You have completed the programme!")
+        return_to_start()
+    # else:
+    #     return no_of_weeks
+
 def input_data(user_name):
     """
     Allow user to input their last week's i.e. last three days' training data.
     Check that they have a registered username and that are inputting 3 integers as their training data values
     """
+    check_week(user_name)
     print(f"\nWelcome back, {user_name}! Hope you enjoyed running last week!")
-
     # Validate the running date the user gives
     # How to validate the data the user inputs taken from Code Institute's Love Sandwiches project
     while True:
@@ -227,7 +241,7 @@ def display_next_week(user_name):
     """
     Display next week's training plan to the user
     """
-
+    check_week(user_name)
     user_row = SELECTED_PLANS.find(user_name).row # Get the row number of the user record
     plan_number = SELECTED_PLANS.row_values(user_row)[1] # Get the number of the user's plan. All plan numbers are stored in column 2
 
@@ -299,6 +313,7 @@ def main():
         display_plan(plan_number)
     elif selected_option == 2:
         user_name = check_username()
+        check_week(user_name)
         input_data(user_name)            
         display_next_week(user_name)
     elif selected_option == 3:
