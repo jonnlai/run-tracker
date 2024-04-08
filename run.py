@@ -55,7 +55,7 @@ def return_to_start():
     Function to allow the user to return to the start page
     """
     while True:
-        quit = input("Type 'q' to quit this programme: ").lower()
+        quit = input("Type 'q' to return to the main page: ").lower()
         try:
             if quit != "q":
                 raise ValueError (f"Expected the letter 'q'. You typed {quit}")
@@ -74,14 +74,17 @@ def select_plan():
     print("Please select a username that is 3-20 characters long and in lower case.")
     while True:
         try:
-            user_name = input("Please select a user name: ").strip().lower()
-            if user_name in USER_NAMES:
+            user_name = input("Please select a username or type 'q' to quit: ").strip().lower()
+            if user_name in USER_NAMES and user_name != "q":
                 raise RuntimeError (f"Username {user_name} already in use. Please select another username")
-            if len(user_name) < 3 or len(user_name) > 20:
+            if (len(user_name) < 3 or len(user_name) > 20) and user_name != "q":
                 raise RuntimeError (f"Username needs to be 3-15 characters long. You typed {user_name} which is {len(user_name)} characters long.") 
         except RuntimeError as e:
             print(f"Invalid data: {e}")
             continue
+        else:
+            if user_name == "q":
+                main()
         break
 
     print(f"\nWelcome {user_name}! Please tell us a bit more about you and your goals.")
@@ -299,6 +302,7 @@ def view_progress(user_name):
         else:
             if view_plan =="y":
                 display_plan(plan_number)
+                break
             else:
                 break
 
