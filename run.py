@@ -1,13 +1,9 @@
-# Your code goes here.
-# You can delete these comments, but do not change the name of this file
-# Write your code to expect a terminal of 80 characters wide and 24 rows high
+# How to create a table taken from Geeks for geeks: https://www.geeksforgeeks.org/how-to-make-a-table-in-python/
+from tabulate import tabulate
 
 # How to connect Google Sheets API to Python taken from Code Institute's Love Sandwiches project
 import gspread
 from google.oauth2.service_account import Credentials
-
-# How to create a table taken from Geeks for geeks: https://www.geeksforgeeks.org/how-to-make-a-table-in-python/
-from tabulate import tabulate
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -30,8 +26,25 @@ def welcome_user():
     Display welcome message 
     Ask the user to select an option
     """
+    print('''
+                  88bd88b?88   d8P  88bd88b 
+                  88P'  `d88   88   88P' ?8b
+                 d88     ?8(  d88  d88   88P
+                d88'     `?88P'?8bd88'   88b
+
+                                   d8b                       
+   d8P                             ?88                       
+d888888P                            88b                      
+  ?88'    88bd88b d888b8b   d8888b  888  d88' d8888b  88bd88b
+  88P     88P'  `d8P' ?88  d8P' `P  888bd8P' d8b_,dP  88P'  `
+  88b    d88     88b  ,88b 88b     d88888b   88b     d88     
+  `?8b  d88'     `?88P'`88b`?888P'd88' `?88b,`?888P'd88'           
+    ''')
+    
     print("\nWelcome to Run Tracker!\n")
-    print("With these training programmes you can learn to run 5, 10, 15 or 20 kilometers.\nPick a training programme and track your progress!\n")
+    print("Learn to run 5, 10, 15 or 20 kilometers with these 8-week training programmes.\n"
+          "Pick a training programme and track your progress!\n"
+    )
 
     while True:
         print("1) Select a new training plan")
@@ -39,9 +52,9 @@ def welcome_user():
         print("3) View your progress and plan\n")
         
         try:
-            selected_option = int(input("What would you like to do? (select 1, 2, or 3): "))
+            selected_option = int(input("What would you like to do? (select 1, 2, or 3): \n"))
             if selected_option not in [1, 2, 3]:
-                raise ValueError (f"Select an option by typing either 1, 2 or 3. You typed {selected_option}")
+                raise ValueError(f"Select an option by typing either 1, 2 or 3. You typed {selected_option}")
         except ValueError as e:
             print(f"Invalid option: {e}, please try again\n")
             continue
@@ -55,7 +68,7 @@ def return_to_start():
     Function to allow the user to return to the start page
     """
     while True:
-        quit = input("Type 'q' to return to the main page: ").lower()
+        quit = input("Type 'q' to return to the main page: \n").lower()
         try:
             if quit != "q":
                 raise ValueError (f"Expected the letter 'q'. You typed {quit}")
@@ -74,7 +87,7 @@ def select_plan():
     print("Please select a username that is 3-20 characters long and in lower case.")
     while True:
         try:
-            user_name = input("Please select a username or type 'q' to quit: ").strip().lower()
+            user_name = input("Please select a username or type 'q' to quit: \n").strip().lower()
             if user_name in USER_NAMES and user_name != "q":
                 raise RuntimeError (f"Username {user_name} already in use. Please select another username")
             if (len(user_name) < 3 or len(user_name) > 20) and user_name != "q":
@@ -89,9 +102,11 @@ def select_plan():
 
     print(f"\nWelcome {user_name}! Please tell us a bit more about you and your goals.")
     
+    # Ask user for their current maximum distance
+    # If the distance is longer 15k, the user is advised to seek a more advanged programme
     while True:
         try:
-            max_distance = int(input("What is the maximum distance in kilometers that you can run comfortably without stopping? (0 - 15) "))
+            max_distance = int(input("What is the maximum distance in kilometers that you can run comfortably without stopping? (0 - 15) \n"))
             if max_distance < 0:
                 raise ValueError (f"Number between 0 and 15 is required, you typed {max_distance}")
         except ValueError as e:
@@ -99,14 +114,20 @@ def select_plan():
             continue
         
         if max_distance > 15:
-            print("You are already a very strong runner! Congratulations!\nThis programme is designed for people who can run less than 15 kilometers.\nWe recommend that you join a more advanced running programme.")
+            print("You are already a very strong runner! Congratulations!\n"
+                  "This programme is designed for people who can"
+                   " run less than 15 kilometers.\n"
+                   "We recommend that you join a more advanced running programme."
+            )
             return_to_start()
 
         break
-        
+    
+    # Ask user to set a goal
+    # The goal cannot be more than 10k longer than their current maximum distance
     while True:        
         try:
-            goal = int(input("What distance (in kilometers) would you like to be able to run: 5, 10, 15 or 20? "))
+            goal = int(input("What distance (in kilometers) would you like to be able to run: 5, 10, 15 or 20? \n"))
             if goal not in [5, 10, 15, 20]:
                 raise ValueError (f"Select one of the following distances: 5, 10, 15 or 20. You typed {goal}")            
             if goal <= max_distance:
@@ -140,6 +161,7 @@ def select_plan():
 def display_plan(plan_number):
     """
     Displays the training plan in a tablet format
+    Give the user instructions how to plan their week and when to input their data
     """
     plan_data = PLANS.row_values(plan_number)
     
@@ -167,7 +189,7 @@ def check_username():
     """
     while True: 
         try:
-            user_name = input("Please enter your registered username or type 'q' to quit: ").lower()
+            user_name = input("Please enter your registered username or type 'q' to quit: \n").lower()
             # Check that the username given is a registred username
             if user_name not in USER_NAMES and user_name != "q":
                 raise ValueError (f"{user_name} is not a registered username")
@@ -190,8 +212,6 @@ def check_week(user_name):
     if no_of_weeks == 8:
         print(f"Well done, {user_name}! You have completed the programme!")
         return_to_start()
-    # else:
-    #     return no_of_weeks
 
 def input_data(user_name):
     """
@@ -219,7 +239,7 @@ def input_data(user_name):
             continue
         else:
             try:
-                check_input = input(f"You typed: {running_data}. Are these correct? (y/n) ").lower() # Ask the user to confirm the data
+                check_input = input(f"You typed: {running_data}. Are these correct? (y/n) \n").lower() # Ask the user to confirm the data
                 if check_input != "y" and check_input != "n":
                     raise ValueError (f"Type 'y' to confirm the data is correct or 'n' to re-type the data")
             except ValueError as e:
@@ -293,7 +313,7 @@ def view_progress(user_name):
 
     while True:
         try:
-            view_plan = input("Would you like to view your plan? (y/n) ").lower()
+            view_plan = input("Would you like to view your plan? (y/n) \n").lower()
             if view_plan != "y" and view_plan != "n":
                 raise ValueError (f"Expected the letter 'y' or 'n'. You entered {view_plan}")
         except ValueError as e:
