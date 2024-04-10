@@ -41,7 +41,7 @@ d888888P                            88b
   `?8b  d88'     `?88P'`88b`?888P'd88' `?88b,`?888P'd88'           
     ''')
     
-    print("\nWelcome to Run Tracker!\n")
+    print("Welcome to Run Tracker!\n")
     print("Learn to run 5, 10, 15 or 20 kilometers with these 8-week training programmes.\n"
           "Pick a training programme and track your progress!\n"
     )
@@ -54,9 +54,9 @@ d888888P                            88b
         try:
             selected_option = int(input("What would you like to do? (select 1, 2, or 3): \n"))
             if selected_option not in [1, 2, 3]:
-                raise ValueError(f"Select an option by typing either 1, 2 or 3. You typed {selected_option}")
-        except ValueError as e:
-            print(f"Invalid option: {e}, please try again\n")
+                raise ValueError
+        except ValueError:
+            print(f"Invalid option. Expected 1, 2 or 3. Please try again.\n")
             continue
 
         break
@@ -84,16 +84,19 @@ def select_plan():
     Get more information about the user's goals and propose a plan
     Raise a ValueError if invalid distance is given
     """
-    print("Please select a username that is 3-20 characters long and in lower case.")
+    print("\nPlease select a username that is 3-20 characters long and in lower case.")
+    
     while True:
         try:
             user_name = input("Please select a username or type 'q' to quit: \n").strip().lower()
             if user_name in USER_NAMES and user_name != "q":
                 raise RuntimeError (f"Username {user_name} already in use. Please select another username")
             if (len(user_name) < 3 or len(user_name) > 20) and user_name != "q":
-                raise RuntimeError (f"Username needs to be 3-15 characters long. You typed {user_name} which is {len(user_name)} characters long.") 
+                raise RuntimeError (f"Username needs to be 3-15 characters long.\n"
+                                    f"You typed {user_name} which is {len(user_name)} characters long."
+                ) 
         except RuntimeError as e:
-            print(f"Invalid data: {e}")
+            print(f"Invalid choice: {e}")
             continue
         else:
             if user_name == "q":
@@ -106,37 +109,43 @@ def select_plan():
     # If the distance is longer 15k, the user is advised to seek a more advanged programme
     while True:
         try:
-            max_distance = int(input("What is the maximum distance in kilometers that you can run comfortably without stopping? (0 - 15) \n"))
-            if max_distance < 0:
-                raise ValueError (f"Number between 0 and 15 is required, you typed {max_distance}")
-        except ValueError as e:
-            print(f"Invalid data: {e}, please try again.\n")
-            continue
-        
-        if max_distance > 15:
-            print("You are already a very strong runner! Congratulations!\n"
-                  "This programme is designed for people who can"
-                   " run less than 15 kilometers.\n"
-                   "We recommend that you join a more advanced running programme."
+            max_distance = int(input("What is the maximum distance in kilometers"
+                                     " that you can run without stopping? (0 - 15) \n")
             )
-            return_to_start()
+            if max_distance < 0:
+                raise ValueError
+        except ValueError:
+            print(f"A whole number between 0 and 15 is required, please try again.\n")
+            continue
+        else:
+            if max_distance > 15:
+                print("\nYou are already a very strong runner! Congratulations!\n"
+                      "This programme is designed for people who can"
+                      " run less than 15 kilometers.\n"
+                      "We recommend that you join a more advanced running programme.\n"
+                )
+                return_to_start()
 
         break
     
     # Ask user to set a goal
     # The goal cannot be more than 10k longer than their current maximum distance
-    while True:        
-        try:
-            goal = int(input("What distance (in kilometers) would you like to be able to run: 5, 10, 15 or 20? \n"))
-            if goal not in [5, 10, 15, 20]:
+    while True:
+        goal = input("What distance (in kilometers) would you like to be able to run: 5, 10, 15 or 20? \n")    
+        try:    
+            if goal.isdigit() == False:
+                raise ValueError(f"Expected the number 5, 10, 15 or 20. You typed {goal}")
+            if int(goal) not in [5, 10, 15, 20]:
                 raise ValueError (f"Select one of the following distances: 5, 10, 15 or 20. You typed {goal}")            
-            if goal <= max_distance:
+            if int(goal) <= max_distance:
                 raise ValueError (f"Set a goal that is higher than your current maximum distance ({max_distance}), you typed {goal}")
-            if goal > max_distance + 10:
-                raise ValueError (f"You are being ambitious! You cannot set a goal that is 10k higher than your current maximum distance ({max_distance}), you typed {goal}")
+            if int(goal) > max_distance + 10:
+                raise ValueError (f"You are being ambitious! You cannot set a goal that is 10k higher than your current maximum distance ({max_distance}). You typed {goal}")
         except ValueError as e:
-            print(f"Invalid data: {e}, please try again.\n")
+            print(f"Invalid choice: {e}, please try again.\n")
             continue
+        else:
+            goal = int(goal)
         
         break
 
@@ -149,7 +158,7 @@ def select_plan():
         plan_number = 2
     elif max_distance < 15 and goal == 15:
         plan_number = 3
-    else:
+    elif max_distance <= 15 and goal == 20: 
         plan_number = 4
         
     print(f"We recommend you plan {plan_number}.\n")
@@ -172,7 +181,7 @@ def display_plan(plan_number):
     week = 1
     activity = 1
     while week <= 8:
-        data.append([f"Week {week}", plan_data[activity], plan_data[activity+1], plan_data[activity+2]])
+        data.append([f"Week {week}", plan_data[activity] + " km", plan_data[activity+1] + " km", plan_data[activity+2] + " km"])
         week += 1
         activity += 3
 
