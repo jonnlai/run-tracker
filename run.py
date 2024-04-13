@@ -1,15 +1,10 @@
-"""
-How to create a table taken from Geeks for geeks:
-https://www.geeksforgeeks.org/how-to-make-a-table-in-python/
-"""
 from tabulate import tabulate
-
-"""
-How to connect Google Sheets API to Python taken from
- Code Institute's Love Sandwiches project
-"""
 import gspread
 from google.oauth2.service_account import Credentials
+
+import colorama
+from colorama import Fore, Back, Style
+colorama.init(autoreset=True)
 
 SCOPE = [
     "https://www.googleapis.com/auth/spreadsheets",
@@ -33,7 +28,7 @@ def welcome_user():
     Display welcome message
     Ask the user to select an option
     """
-    print("""
+    print(f"""{Fore.GREEN}
                   88bd88b?88   d8P  88bd88b
                   88P'  `d88   88   88P' ?8b
                  d88     ?8(  d88  d88   88P
@@ -48,19 +43,21 @@ d888888P                            88b
   `?8b  d88'     `?88P'`88b`?888P'd88' `?88b,`?888P'd88'
     """)
 
-    print("Welcome to Run Tracker!\n")
+    print(f"Welcome to {Fore.GREEN}Run Tracker!\n")
     print("Learn to run 5, 10, 15 or 20 kilometers"
           " with these 8-week training programmes.\n"
           "Pick a training programme and track your progress!\n")
 
     while True:
-        print("1) Select a new training plan")
-        print("2) Input exercise data")
-        print("3) View your progress and plan\n")
+        print(f"{Fore.RED}1) Select a new training plan")
+        print(f"{Fore.CYAN}2) Input exercise data")
+        print(f"{Fore.YELLOW}3) View your progress and plan\n")
 
         try:
-            selected_option = int(input("What would you like to do?"
-                                        " (select 1, 2, or 3): \n"))
+            selected_option = int(input("What would you like"
+                                        f" to do? ({Fore.RED}1{Fore.RESET},"
+                                        f" {Fore.CYAN}2 {Fore.RESET}or "
+                                        f"{Fore.YELLOW}3{Fore.RESET}):\n"))
             if selected_option not in [1, 2, 3]:
                 raise ValueError
         except ValueError:
@@ -100,13 +97,13 @@ def select_plan():
     while True:
         try:
             username = input("Please select a username or type 'q'"
-                             " to quit: \n").strip().lower()
+                             f" to quit: \n").strip().lower()
             if username in USER_NAMES and username != "q":
                 raise RuntimeError(f"Username {username} already in use."
-                                   " Please select another username")
+                                   " Please select another username.")
             if (len(username) < 3 or len(username) > 20) and username != "q":
                 raise RuntimeError("Username needs to be 3-15 characters "
-                                   f"long.\n You typed {username} which is"
+                                   f"long.\nYou typed {username} which is"
                                    f" {len(username)} characters long.")
         except RuntimeError as e:
             print(f"Invalid choice: {e}")
@@ -128,7 +125,7 @@ def select_plan():
         try:
             max_distance = int(input("What's the maximum distance in "
                                      "kilometers that you can run "
-                                     "without stopping? (0 - 15) \n"))
+                                     f"without stopping? (0 - 15) \n"))
             if max_distance < 0:
                 raise ValueError
         except ValueError:
@@ -144,14 +141,14 @@ def select_plan():
                 return_to_start()
 
         break
-    
+
     """
     Ask user to set a goal
     The goal needs to be higher than max distance but cannot be
     more than 10k longer than their current maximum distance
     """
     while True:
-        goal = input("What distance (in kilometers) would you"
+        goal = input("\nWhat distance (in kilometers) would you"
                      " like to be able to run: 5, 10, 15 or 20? \n")
         try:
             if goal.isdigit() is False:
@@ -160,7 +157,7 @@ def select_plan():
                 raise ValueError("Select one of the following distances:"
                                  f" 5, 10, 15 or 20. You typed {goal}")
             if int(goal) <= max_distance:
-                raise ValueError("Set a goal that is higher than your" 
+                raise ValueError("Set a goal that is higher than your"
                                  f"current maximum distance ({max_distance})"
                                  f", you typed {goal}")
             if int(goal) > max_distance + 10:
@@ -173,7 +170,7 @@ def select_plan():
             continue
         else:
             goal = int(goal)
-        
+
         break
 
     """
@@ -195,7 +192,7 @@ def select_plan():
     """
     Add username and plan number to the selected_plans worksheet
     Add username to the results worksheet
-    """  
+    """
     print(f"We recommend you plan {plan_number}.\n")
     SELECTED_PLANS.append_row([username, plan_number])
     RESULTS.append_row([username])
@@ -239,7 +236,7 @@ def check_username():
     Ask the user to input their username and
     check whether it has been registered before
     """
-    while True: 
+    while True:
         try:
             username = input("Please enter your registered username"
                              " or type 'q' to quit: \n").lower()
@@ -345,7 +342,7 @@ def display_next_week(username):
 
     data = []
 
-    data.append([f"Week {int((next_activity-1)/3+1)}", 
+    data.append([f"Week {int((next_activity-1)/3+1)}",
                  next_week[0], next_week[1], next_week[2]])
 
     next_week_plan = tabulate(data, headers=header, tablefmt="grid")
