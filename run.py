@@ -350,7 +350,7 @@ def display_next_week(username):
 
     next_week_plan = tabulate(data, headers=header, tablefmt="grid")
 
-    print(f"\nYou have been following this 8 week programme for"
+    print(f"\nYou have been following this 8 week programme for "
           f"{int((next_activity-1)/3)} week(s).")
     print("Here is your next week's plan:\n")
     print(next_week_plan)
