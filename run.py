@@ -61,7 +61,7 @@ d888888P                            88b
             if selected_option not in [1, 2, 3]:
                 raise ValueError
         except ValueError:
-            print(f"Invalid option. Expected 1, 2 or 3. Please try again.\n")
+            print(f"Invalid choice. Expected 1, 2 or 3. Please try again.\n")
             continue
 
         break
@@ -99,13 +99,13 @@ def select_plan():
             username = input("Please select a username or type 'q'"
                              f" to quit: \n").strip().lower()
             if username in USER_NAMES and username != "q":
-                raise RuntimeError(f"Username {username} already in use."
+                raise ValueError(f"Username {username} already in use."
                                    " Please select another username.")
             if (len(username) < 3 or len(username) > 20) and username != "q":
-                raise RuntimeError("Username needs to be 3-15 characters "
+                raise ValueError("Username needs to be 3-15 characters "
                                    f"long.\nYou typed {username} which is"
                                    f" {len(username)} characters long.")
-        except RuntimeError as e:
+        except ValueError as e:
             print(f"Invalid choice: {e}")
             continue
         else:
@@ -129,12 +129,12 @@ def select_plan():
             if max_distance < 0:
                 raise ValueError
         except ValueError:
-            print(f"A whole number between 0 and 15 is required, "
-                  "please try again.\n")
+            print(f"\nA whole number between 0 and 15 is required, "
+                  "please try again.")
             continue
         else:
             if max_distance > 15:
-                print("\nYou are already a very strong runner!"
+                print("\nYou are already a very strong runner! "
                       "Congratulations!\nThis programme is designed for people"
                       " who can run less than 15 kilometers.\nWe recommend"
                       " that you join a more advanced running programme.\n")
@@ -152,21 +152,21 @@ def select_plan():
                      " like to be able to run: 5, 10, 15 or 20? \n")
         try:
             if goal.isdigit() is False:
-                raise ValueError(f"Expected a number. You typed {goal}")
+                raise ValueError(f"Expected a whole number. You typed: {goal}")
             if int(goal) not in [5, 10, 15, 20]:
                 raise ValueError("Select one of the following distances:"
-                                 f" 5, 10, 15 or 20. You typed {goal}")
+                                 f" 5, 10, 15 or 20. You typed: {goal}")
             if int(goal) <= max_distance:
                 raise ValueError("Set a goal that is higher than your"
                                  f"current maximum distance ({max_distance})"
-                                 f", you typed {goal}")
+                                 f", you typed: {goal}")
             if int(goal) > max_distance + 10:
                 raise ValueError("You are being ambitious! You cannot set"
                                  " a goal that is 10k higher than your "
                                  f"current maximum distance ({max_distance})."
-                                 f" You typed {goal}")
+                                 f" You typed: {goal}")
         except ValueError as e:
-            print(f"Invalid choice: {e}, please try again.\n")
+            print(f"{e}. Please try again.")
             continue
         else:
             goal = int(goal)
@@ -193,7 +193,7 @@ def select_plan():
     Add username and plan number to the selected_plans worksheet
     Add username to the results worksheet
     """
-    print(f"We recommend you plan {plan_number}.\n")
+    print(f"We recommend you plan {plan_number}.")
     SELECTED_PLANS.append_row([username, plan_number])
     RESULTS.append_row([username])
 
@@ -223,7 +223,7 @@ def display_plan(plan_number):
 
     training_plan = tabulate(data, headers=header, tablefmt="grid")
 
-    print("We recommend that you run three days a week ensuring that you "
+    print("\nWe recommend that you run three days a week ensuring that you "
           "leave at least one rest day inbetween each run.\n"
           "For example you would run every Monday, Wednesday and Saturday.\n")
     print("Here is your training plan:\n")
@@ -238,13 +238,13 @@ def check_username():
     """
     while True:
         try:
-            username = input("Please enter your registered username"
+            username = input("\nPlease enter your registered username"
                              " or type 'q' to quit: \n").lower()
             # Check that the username given is a registred username
             if username not in USER_NAMES and username != "q":
                 raise ValueError(f"{username} is not a registered username")
         except ValueError as e:
-            print(f"Invalid choice: {e}, please try again or type 'q' to quit")
+            print(f"{e}, please try again or type 'q' to quit.\n")
             continue
         else:
             if username == "q":
@@ -263,7 +263,11 @@ def check_week(username):
     no_of_weeks = int((len(RESULTS.row_values(user_row))-1) / 3)
 
     if no_of_weeks == 8:
-        print(f"Well done, {username}! You have completed the programme!")
+        print(f"\nWell done, {username}! You have finished "
+              "this 8-week programme!")
+        print("If you would like to view your results, "
+              "return to main page and select option 3.\n")
+
         return_to_start()
 
 
@@ -321,7 +325,7 @@ def input_data(username):
 
     print("\nThank you for adding your latest running results!")
     print("Keep on running and don't forget to come back next week"
-          " to add your results!\n")
+          " to add your results!")
 
 
 def display_next_week(username):
@@ -348,8 +352,8 @@ def display_next_week(username):
     next_week_plan = tabulate(data, headers=header, tablefmt="grid")
 
     print(f"\nYou have been following this 8 week programme for "
-          f"{int((next_activity-1)/3)} week(s).")
-    print("Here is your next week's plan:\n")
+          f"{int((next_activity-1)/3)} week(s).\n")
+    print("Here is your next week's plan:")
     print(next_week_plan)
 
 
@@ -366,8 +370,8 @@ def view_progress(username):
     plan_number = SELECTED_PLANS.row_values(user_row)[1]
 
     print("\nYou have been following this 8 week programme"
-          f" for {no_of_weeks} week(s).")
-    print("Here are your results so far:\n")
+          f" for {no_of_weeks} week(s).\n")
+    print("Here are your results so far:")
 
     header = ["Week", "Day 1", "Day 2", "Day 3"]
 
