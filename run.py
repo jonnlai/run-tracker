@@ -282,32 +282,35 @@ def input_data(username):
     check_week(username)
     print(f"\nWelcome back, {username}! Hope you enjoyed running last week!")
     # Validate the running date the user gives
-    # How to validate the data taken from CI's Love Sandwiches project
+    # How to validate partly the data taken from CI's Love Sandwiches project
+
     while True:
         print("\nPlease enter your running data from last week"
-              " (your last three runs).")
+                " (your last three runs).")
         print("You should enter three numbers, separated by commas.\n"
-              "If you missed a run, you should indicate that by typing 0.")
+                "If you missed a run, you should indicate that by typing 0.")
         print("For example: 3,0,2\n")
 
         runs_input = input("Please enter your running data here: \n")
         running_data = runs_input.split(",")
 
         try:
-            [int(run) for run in running_data]
+            for run in running_data:
+                if run.isdigit() is False:
+                    raise ValueError("Expected a whole number")
             if len(running_data) != 3:
                 raise ValueError(f"Three values required,"
-                                 f" you provided {len(running_data)}")
+                                    f" you provided {len(running_data)}")
         except ValueError as e:
-            print(f"Invalid data: {e}, please try again.\n")
+            print(f"Invalid data: {e}, please try again.")
             continue
         else:
             try:
                 check_input = input(f"\nYou typed: {running_data}. "
-                                    "Are these correct? (y/n) \n").lower()
+                                        "Are these correct? (y/n) \n").lower()
                 if check_input != "y" and check_input != "n":
                     raise ValueError(f"Type 'y' to confirm the data is correct"
-                                     " or 'n' to re-enter the data")
+                                        " or 'n' to re-enter the data")
             except ValueError as e:
                 print(f"Invalid selection: {e}, please try again.")
                 continue
