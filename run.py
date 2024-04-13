@@ -269,6 +269,8 @@ def check_week(username):
               "return to main page and select option 3.\n")
 
         return_to_start()
+    else:
+        return no_of_weeks
 
 
 def input_data(username):
@@ -301,7 +303,7 @@ def input_data(username):
             continue
         else:
             try:
-                check_input = input(f"You typed: {running_data}. "
+                check_input = input(f"\nYou typed: {running_data}. "
                                     "Are these correct? (y/n) \n").lower()
                 if check_input != "y" and check_input != "n":
                     raise ValueError(f"Type 'y' to confirm the data is correct"
@@ -332,12 +334,12 @@ def display_next_week(username):
     """
     Display next week's training plan to the user
     """
-    check_week(username)
+    no_of_weeks = check_week(username)
     # Get the row number of the user record
     user_row = SELECTED_PLANS.find(username).row
     # Get the number of user's plan. All plan numbers are stored in column 2
     plan_number = SELECTED_PLANS.row_values(user_row)[1]
-    # Get the number of activities recorded by the user + 1
+    # Number of activities recorded by the user + 1
     next_activity = int((len(RESULTS.row_values(user_row))))
     # Get the next three activities from the list
     next_week = PLANS.row_values(plan_number)[next_activity:next_activity+3]
@@ -346,13 +348,13 @@ def display_next_week(username):
 
     data = []
 
-    data.append([f"Week {int((next_activity-1)/3+1)}",
+    data.append([f"Week {no_of_weeks+1}",
                  next_week[0], next_week[1], next_week[2]])
 
     next_week_plan = tabulate(data, headers=header, tablefmt="grid")
 
     print(f"\nYou have been following this 8 week programme for "
-          f"{int((next_activity-1)/3)} week(s).\n")
+          f"{no_of_weeks} week(s).\n")
     print("Here is your next week's plan:")
     print(next_week_plan)
 
@@ -371,7 +373,7 @@ def view_progress(username):
 
     print("\nYou have been following this 8 week programme"
           f" for {no_of_weeks} week(s).\n")
-    print("Here are your results so far:")
+    print("Here are your results:")
 
     header = ["Week", "Day 1", "Day 2", "Day 3"]
 
@@ -381,8 +383,9 @@ def view_progress(username):
     week = 1
     activity = 1
     while week <= no_of_weeks:
-        data.append([f"Week {week}", user_data[activity],
-                     user_data[activity+1], user_data[activity+2]])
+        data.append([f"Week {week}", user_data[activity] + " km",
+                     user_data[activity+1] + " km",
+                     user_data[activity+2] + " km"])
         week += 1
         activity += 3
 
@@ -391,7 +394,7 @@ def view_progress(username):
 
     while True:
         try:
-            view_plan = input("Would you like to view"
+            view_plan = input("\nWould you like to view"
                               " your plan? (y/n) \n").lower()
             if view_plan != "y" and view_plan != "n":
                 raise ValueError(f"Expected the letter 'y' or 'n'."
