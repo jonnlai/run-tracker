@@ -109,6 +109,28 @@ Asks the user to input their username and if the username is recognised, allows 
 
 [Back to top](#run-tracker)
 
+## Testing
+
+### Code Validation
+
+[CI Python Linter](https://pep8ci.herokuapp.com/#) was used to validate the Python code for PEP8 requirements.
+
+The code was validated for the first time, the following warning and error messages were received.
+
+![Python Linter 1](readme-files/python-linter/python-linter-1.png)
+![Python Linter 2](readme-files/python-linter/python-linter-2.png)
+![Python Linter 3](readme-files/python-linter/python-linter-3.png)
+![Python Linter 4](readme-files/python-linter/python-linter-4.png)
+![Python Linter 5](readme-files/python-linter/python-linter-5.png)
+![Python Linter 6](readme-files/python-linter/python-linter-6.png)
+![Python Linter 7](readme-files/python-linter/python-linter-7.png)
+![Python Linter 8](readme-files/python-linter/python-linter-8.png)
+![Python Linter 9](readme-files/python-linter/python-linter-9.png)
+
+The warnings and errors were addressed and it was confirmed that no errors remained.
+
+![No errors](readme-files/python-linter/no-errors.png)
+
 ## Deployment
 
 The application was deployed using [Heroku](https://id.heroku.com/) and Code Institute's mock terminal.
