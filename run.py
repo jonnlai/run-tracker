@@ -3,7 +3,7 @@ import gspread
 from google.oauth2.service_account import Credentials
 
 import colorama
-from colorama import Fore, Back, Style
+from colorama import Fore
 colorama.init(autoreset=True)
 
 SCOPE = [
@@ -43,25 +43,26 @@ d888888P                            88b
   `?8b  d88'     `?88P'`88b`?888P'd88' `?88b,`?888P'd88'
     """)
 
-    print(f"Welcome to {Fore.GREEN}Run Tracker!\n")
+    print(f"Welcome to {Fore.GREEN}Run Tracker{Fore.RESET}!\n")
     print("Learn to run 5, 10, 15 or 20 kilometers"
           " with these 8-week training programmes.\n"
           "Pick a training programme and track your progress!\n")
 
     while True:
-        print(f"{Fore.RED}1) Select a new training plan")
+        print(f"{Fore.MAGENTA}1) Select a new training plan")
         print(f"{Fore.CYAN}2) Input exercise data")
-        print(f"{Fore.YELLOW}3) View your progress and plan\n")
+        print(f"{Fore.YELLOW}3) View your progress and plan{Fore.RESET}\n")
 
         try:
-            selected_option = int(input("What would you like"
-                                        f" to do? ({Fore.RED}1{Fore.RESET},"
+            selected_option = int(input("What would you like to do? "
+                                        f"({Fore.MAGENTA}1{Fore.RESET},"
                                         f" {Fore.CYAN}2 {Fore.RESET}or "
                                         f"{Fore.YELLOW}3{Fore.RESET}):\n"))
             if selected_option not in [1, 2, 3]:
                 raise ValueError
         except ValueError:
-            print(f"Invalid choice. Expected 1, 2 or 3. Please try again.\n")
+            print(f"{Fore.RED}Invalid choice. Expected 1, 2 or 3. "
+                  "Please try again.\n")
             continue
 
         break
@@ -74,12 +75,13 @@ def return_to_start():
     Function to allow the user to return to the start page
     """
     while True:
-        quit = input("Type 'q' to return to the main page: \n").lower()
+        quit = input(f"Type 'q' to return to the main "
+                     f"page: \n").lower()
         try:
             if quit != "q":
                 raise ValueError(f"Expected the letter 'q'. You typed {quit}")
         except ValueError as e:
-            print(f"Invalid data: {e}, please try again.")
+            print(f"{Fore.RED}Invalid data: {e}, please try again.")
             continue
         else:
             if quit == "q":
@@ -91,13 +93,13 @@ def select_plan():
     Get more information about the user's goals and propose a plan
     Raise a ValueError if invalid distance is given
     """
-    print("\nPlease select a username that is 3-20 characters long"
-          " and in lower case.")
+    print(f"\n{Fore.GREEN}Please select a username that is"
+          " 3-20 characters long and in lower case.")
 
     while True:
         try:
-            username = input("Please select a username or type 'q'"
-                             f" to quit: \n").strip().lower()
+            username = input(f"Please select a username or type "
+                             f"'q' to quit: \n").strip().lower()
             if username in USER_NAMES and username != "q":
                 raise ValueError(f"Username {username} already in use."
                                    " Please select another username.")
@@ -106,14 +108,14 @@ def select_plan():
                                    f"long.\nYou typed {username} which is"
                                    f" {len(username)} characters long.")
         except ValueError as e:
-            print(f"Invalid choice: {e}")
+            print(f"\n{Fore.RED}Invalid choice: {e}")
             continue
         else:
             if username == "q":
                 main()
         break
 
-    print(f"\nWelcome {username}!"
+    print(f"\n{Fore.GREEN}Welcome {username}!"
           " Please tell us a bit more about you and your goals.")
 
     """
@@ -123,18 +125,18 @@ def select_plan():
     """
     while True:
         try:
-            max_distance = int(input("What's the maximum distance in "
-                                     "kilometers that you can run "
-                                     f"without stopping? (0 - 15) \n"))
+            max_distance = int(input(f"What's the maximum distance"
+                                     " in kilometers\nthat you can run without"
+                                     f" stopping? (0 - 15) \n"))
             if max_distance < 0:
                 raise ValueError
         except ValueError:
-            print(f"\nA whole number between 0 and 15 is required, "
+            print(f"\n{Fore.RED}A whole number between 0 and 15 is required, "
                   "please try again.")
             continue
         else:
             if max_distance > 15:
-                print("\nYou are already a very strong runner! "
+                print(f"\n{Fore.GREEN}You are already a very strong runner! "
                       "Congratulations!\nThis programme is designed for people"
                       " who can run less than 15 kilometers.\nWe recommend"
                       " that you join a more advanced running programme.\n")
@@ -149,7 +151,7 @@ def select_plan():
     """
     while True:
         goal = input("\nWhat distance (in kilometers) would you"
-                     " like to be able to run: 5, 10, 15 or 20? \n")
+                     " like to\nbe able to run: 5, 10, 15 or 20? \n")
         try:
             if goal.isdigit() is False:
                 raise ValueError(f"Expected a whole number. You typed: {goal}")
@@ -161,12 +163,12 @@ def select_plan():
                                  f"current maximum distance ({max_distance})"
                                  f", you typed: {goal}")
             if int(goal) > max_distance + 10:
-                raise ValueError("You are being ambitious! You cannot set"
+                raise ValueError("You are being ambitious!\nYou cannot set"
                                  " a goal that is 10k higher than your "
-                                 f"current maximum distance ({max_distance})."
+                                 f"current maximum distance ({max_distance}).\n"
                                  f" You typed: {goal}")
         except ValueError as e:
-            print(f"{e}. Please try again.")
+            print(f"{Fore.RED}{e}. Please try again.")
             continue
         else:
             goal = int(goal)
@@ -193,7 +195,7 @@ def select_plan():
     Add username and plan number to the selected_plans worksheet
     Add username to the results worksheet
     """
-    print(f"We recommend you plan {plan_number}.")
+    print(f"\n{Fore.GREEN}We recommend you plan {plan_number}.")
     SELECTED_PLANS.append_row([username, plan_number])
     RESULTS.append_row([username])
 
@@ -223,12 +225,13 @@ def display_plan(plan_number):
 
     training_plan = tabulate(data, headers=header, tablefmt="grid")
 
-    print("\nWe recommend that you run three days a week ensuring that you "
-          "leave at least one rest day inbetween each run.\n"
-          "For example you would run every Monday, Wednesday and Saturday.\n")
-    print("Here is your training plan:\n")
+    print(f"\n{Fore.GREEN}We recommend that you run three days a week ensuring"
+          " that you leave at least one rest day inbetween each run.\n"
+          "For example you could run every Monday, Wednesday and Saturday.\n")
+    print(f"{Fore.GREEN}Here is your training plan:\n")
     print(training_plan)
-    print("\nPlease return once a week to input that week's results.\n")
+    print(f"\n{Fore.GREEN}Please return once a week to input that week's"
+          " results.\n")
 
 
 def check_username():
@@ -244,7 +247,7 @@ def check_username():
             if username not in USER_NAMES and username != "q":
                 raise ValueError(f"{username} is not a registered username")
         except ValueError as e:
-            print(f"{e}, please try again or type 'q' to quit.\n")
+            print(f"{Fore.RED}{e}, please try again or type 'q' to quit.")
             continue
         else:
             if username == "q":
@@ -263,10 +266,10 @@ def check_week(username):
     no_of_weeks = int((len(RESULTS.row_values(user_row))-1) / 3)
 
     if no_of_weeks == 8:
-        print(f"\nWell done, {username}! You have finished "
-              "this 8-week programme!")
-        print("If you would like to view your results, "
-              "return to main page and select option 3.\n")
+        print(f"\n{Fore.GREEN}Well done, {username}! "
+              "You have finished this 8-week programme!")
+        print(f"{Fore.GREEN}If you would like to view your results, "
+              "return to the main page and select option 3.\n")
 
         return_to_start()
     else:
@@ -280,16 +283,17 @@ def input_data(username):
     that they are inputting 3 integers as their training data values
     """
     check_week(username)
-    print(f"\nWelcome back, {username}! Hope you enjoyed running last week!")
+    print(f"\n{Fore.GREEN}Welcome back, {username}!"
+          " Hope you enjoyed running last week!")
     # Validate the running date the user gives
     # How to validate partly the data taken from CI's Love Sandwiches project
 
     while True:
-        print("\nPlease enter your running data from last week"
+        print(f"\n{Fore.GREEN}Please enter your running data from last week"
               " (your last three runs).")
-        print("You should enter three numbers, separated by commas.\n"
+        print(f"{Fore.GREEN}Please enter three numbers, separated by commas.\n"
               "If you missed a run, you should indicate that by typing 0.")
-        print("For example: 3,0,2\n")
+        print(f"{Fore.GREEN}For example: 3,0,2\n")
 
         runs_input = input("Please enter your running data here: \n")
         running_data = runs_input.split(",")
@@ -302,7 +306,7 @@ def input_data(username):
                 raise ValueError("Three values required,"
                                  f" you provided {len(running_data)}")
         except ValueError as e:
-            print(f"Invalid data: {e}, please try again.")
+            print(f"{Fore.RED}Invalid data: {e}, please try again.")
             continue
         else:
             while True:
@@ -313,7 +317,7 @@ def input_data(username):
                         raise ValueError(f"Type 'y' to confirm the data is "
                                          "correct or 'n' to re-enter the data")
                 except ValueError as e:
-                    print(f"Invalid selection: {e}, please try again.")
+                    print(f"{Fore.RED}Invalid selection: {e}, please try again.")
                     continue
                 break
 
@@ -330,8 +334,8 @@ def input_data(username):
                 continue
         break
 
-    print("\nThank you for adding your latest running results!")
-    print("Keep running and don't forget to come back next week"
+    print(f"\n{Fore.GREEN}Thank you for adding your latest running results!")
+    print(f"{Fore.GREEN}Keep running and don't forget to come back next week"
           " to add your results!")
 
 
@@ -358,9 +362,9 @@ def display_next_week(username):
 
     next_week_plan = tabulate(data, headers=header, tablefmt="grid")
 
-    print(f"\nYou have been following this 8 week programme for "
+    print(f"\n{Fore.GREEN}You have been following this 8 week programme for "
           f"{no_of_weeks} week(s).\n")
-    print("Here is your next week's plan:")
+    print(f"{Fore.GREEN}Here is your next week's plan:")
     print(next_week_plan)
 
 
@@ -376,9 +380,9 @@ def view_progress(username):
     user_row = SELECTED_PLANS.find(username).row
     plan_number = SELECTED_PLANS.row_values(user_row)[1]
 
-    print("\nYou have been following this 8 week programme"
+    print(f"\n{Fore.GREEN}You have been following this 8 week programme"
           f" for {no_of_weeks} week(s).\n")
-    print("Here are your results:")
+    print(f"{Fore.GREEN}Here are your results:")
 
     header = ["Week", "Day 1", "Day 2", "Day 3"]
 
@@ -405,7 +409,7 @@ def view_progress(username):
                 raise ValueError(f"Expected the letter 'y' or 'n'."
                                  f" You entered {view_plan}")
         except ValueError as e:
-            print(f"Invalid option: {e}, please try again.")
+            print(f"{Fore.RED}Invalid option: {e}, please try again.")
             continue
         else:
             if view_plan == "y":
