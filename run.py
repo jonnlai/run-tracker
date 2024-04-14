@@ -286,9 +286,9 @@ def input_data(username):
 
     while True:
         print("\nPlease enter your running data from last week"
-                " (your last three runs).")
+              " (your last three runs).")
         print("You should enter three numbers, separated by commas.\n"
-                "If you missed a run, you should indicate that by typing 0.")
+              "If you missed a run, you should indicate that by typing 0.")
         print("For example: 3,0,2\n")
 
         runs_input = input("Please enter your running data here: \n")
@@ -299,37 +299,39 @@ def input_data(username):
                 if run.isdigit() is False:
                     raise ValueError("Expected a whole number")
             if len(running_data) != 3:
-                raise ValueError(f"Three values required,"
-                                    f" you provided {len(running_data)}")
+                raise ValueError("Three values required,"
+                                 f" you provided {len(running_data)}")
         except ValueError as e:
             print(f"Invalid data: {e}, please try again.")
             continue
         else:
-            try:
-                check_input = input(f"\nYou typed: {running_data}. "
+            while True:
+                try:
+                    check_input = input(f"\nYou typed: {running_data}. "
                                         "Are these correct? (y/n) \n").lower()
-                if check_input != "y" and check_input != "n":
-                    raise ValueError(f"Type 'y' to confirm the data is correct"
-                                        " or 'n' to re-enter the data")
-            except ValueError as e:
-                print(f"Invalid selection: {e}, please try again.")
-                continue
-            else:
-                if check_input == "y":
-                    # Get the row number of user record
-                    user_row = RESULTS.find(username).row
-                    # Add the running data inputted into the results worksheet
-                    for data in running_data:
-                        # number of values recorded plus 1
-                        next_result = len(RESULTS.row_values(user_row))+1
-                        # Add into the next empty cell using row and col coords
-                        RESULTS.update_cell(user_row, next_result, data)
-                elif check_input == "n":
+                    if check_input != "y" and check_input != "n":
+                        raise ValueError(f"Type 'y' to confirm the data is "
+                                         "correct or 'n' to re-enter the data")
+                except ValueError as e:
+                    print(f"Invalid selection: {e}, please try again.")
                     continue
+                break
+
+            if check_input == "y":
+                # Get the row number of user record
+                user_row = RESULTS.find(username).row
+                # Add running data to results worksheet
+                for data in running_data:
+                    # number of values recorded plus 1
+                    next_result = len(RESULTS.row_values(user_row))+1
+                    # Add into next empty cell using row+col coords
+                    RESULTS.update_cell(user_row, next_result, data)
+            elif check_input == "n":
+                continue
         break
 
     print("\nThank you for adding your latest running results!")
-    print("Keep on running and don't forget to come back next week"
+    print("Keep running and don't forget to come back next week"
           " to add your results!")
 
 
