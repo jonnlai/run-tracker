@@ -37,6 +37,8 @@ Three worksheets are being used:
 - one to store which plan each user had chosen
 - one to store the user's running data
 
+[Back to top](#run-tracker)
+
 ## Features
 
 ### Main page
@@ -81,11 +83,13 @@ Asks the user to input their username and if the username is recognised, allows 
 
 ![View progress](readme-files/features/view-progress.png)
 
+[Back to top](#run-tracker)
+
 ## Technologies Used
 
 ### Language Used
 
-- [Python3](<https://en.wikipedia.org/wiki/Python_(programming_language)>)
+- [Python3](https://www.python.org/)
 
 ### Frameworks, Libraries and Programs Used
 
@@ -102,3 +106,41 @@ Asks the user to input their username and if the username is recognised, allows 
 - [Tabulate](https://pypi.org/project/tabulate/) library was used to present the data in a table format.
 
 - [Colorama](https://pypi.org/project/colorama/) library was used to apply color to the terminal text.
+
+[Back to top](#run-tracker)
+
+## Deployment
+
+The application was deployed using [Heroku](https://id.heroku.com/) and Code Institute's mock terminal.
+
+The following steps were taken to deploy this application:
+
+1. Create requirements.txt file and run `pip3 freeze > requirements.txt` command in the terminal to create a list of requirements. Commit and push these changes to Github.
+2. Go to the Heroku dashboard and click on "Create new app".
+3. Once the app has been created, go to "Config Vars" under the "Settings" tab.
+4. Click on "Reveals Config Vars" and in the field for KEY enter CREDS and in the field for VALUE copy-paste the entire creds.json file.
+5. Add another Config Var, KEY: PORT and VALUE: 8000.
+6. Go to "Buildpacks" section and set the buildpacks to `Python` and `NodeJS` in that order.
+7. Go to the "Deploy" tab, select "GitHub" and click on "Connect to GitHub" and
+8. Search for the repository name and click "Connect" next the repository name.
+9. Choose "Automatic deploys" or "Manual deploys" to deploy your application.
+
+[Back to top](#run-tracker)
+
+## Credits
+
+### Content
+
+All content was created by the developer.
+
+### Media
+
+- The ASCII art was created using [ASCII.co.uk](https://ascii.co.uk/text).
+
+### Code
+
+- [Geeksforgeeks](https://www.geeksforgeeks.org/how-to-make-a-table-in-python/) was consulted to learn how how to create a table in Python
+
+- [Stackoverflow](https://stackoverflow.com/questions/287871/how-do-i-print-colored-text-to-the-terminal#287944) was consulted to learn how to add color to the text
+
+- Code Institute's Love Sandwiches walkthrough project inspired this project and the steps of how to connect Python to Google Sheets were taken from it.
