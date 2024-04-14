@@ -80,3 +80,25 @@ Inform the user that they have finished the programme and advises them to how th
 Asks the user to input their username and if the username is recognised, allows the user to view their results and their plan.
 
 ![View progress](readme-files/features/view-progress.png)
+
+## Technologies Used
+
+### Language Used
+
+- [Python3](<https://en.wikipedia.org/wiki/Python_(programming_language)>)
+
+### Frameworks, Libraries and Programs Used
+
+- [Lucid](https://lucid.app/) was used to create the programme flowchart.
+
+- [VSCode](https://code.visualstudio.com/) was used for writing code, committing, and then pushing to GitHub.
+
+- [GitHub](https://github.com/) was used to store the project after pushing.
+
+- [Heroku](https://id.heroku.com/) was used to deploy the application.
+
+- [CI Python Linter](https://pep8ci.herokuapp.com/#) was used to validate the Python code.
+
+- [Tabulate](https://pypi.org/project/tabulate/) library was used to present the data in a table format.
+
+- [Colorama](https://pypi.org/project/colorama/) library was used to apply color to the terminal text.
