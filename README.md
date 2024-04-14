@@ -29,10 +29,54 @@ A flowchart to plan the logic of the programme was created using [Lucid](https:/
 
 ### Data Model
 
-The data that user inputs is initially stored as variables. Once all the necessary data has been inputted by the user and it has been validated, the data is added to a Google Sheet.
+The data that user inputs is initially stored as variables. Once all the necessary data has been inputted by the user and it has been validated, the data is added to a Google Sheets.
 
 Three worksheets are being used:
 
 - one to store the four different running plans that the programme offers
 - one to store which plan each user had chosen
 - one to store the user's running data
+
+## Features
+
+### Main page
+
+The user is given information about the application and is asked to select an option.
+
+![Main page](readme-files/mockup-image.png)
+
+### Select plan
+
+Collects information from the user in order to be able to select the most suitable plan for them based on the maximum distance that the user can currently run and their goal. Adds the username and the user's select plan to Google Sheets.
+
+![Select plan](readme-files/features/select-plan.png)
+
+### View plan
+
+Displays the selected 8-week plan to the user and advises user when to return to input their results.
+
+![View plan](readme-files/features/view-plan.png)
+
+### Input data
+
+Asks the user to input their username and if the username is recognised, allows the user to input previous week's running data.
+
+![Input data](readme-files/features/input-data.png)
+
+### Next week's plan
+
+After the user has added their latest running data, next week's plan is displayed to user, and their encouraged to keep following the running programme and to return the following week to add that week's results.
+
+![Next week](readme-files/features/next-week.png)
+
+### Programme finished
+
+Inform the user that they have finished the programme and advises them to how they can view their results.
+
+![Programme finished](readme-files/features/programme-finished.png)
+
+### View progress
+
+Asks the user to input their username and if the username is recognised, allows the user to view their results and their plan.
+
+![View progress](readme-files/features/view-progress.png)
