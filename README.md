@@ -20,3 +20,19 @@ The deployed project can be found here: [Run Tracker](https://running-programme-
 - As a beginner or intermediate runner, I want a programme that helps me to push my limits and get better results.
 - As a user of the application, I want to be able to store my running data.
 - As a user of the application, I want to be able to view my progress and compare that to my plan.
+
+### Flowchart
+
+A flowchart to plan the logic of the programme was created using [Lucid](https://lucid.app/).
+
+![Flowchart](readme-files/flowchart.png)
+
+### Data Model
+
+The data that user inputs is initially stored as variables. Once all the necessary data has been inputted by the user and it has been validated, the data is added to a Google Sheet.
+
+Three worksheets are being used:
+
+- one to store the four different running plans that the programme offers
+- one to store which plan each user had chosen
+- one to store the user's running data
