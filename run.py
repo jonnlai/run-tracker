@@ -271,7 +271,7 @@ def check_week(username):
         print(f"\n{Fore.GREEN}Well done, {username}! "
               "You have finished this 8-week programme!")
         print(f"{Fore.GREEN}If you would like to view your results, "
-              "return to the main page and select option 3.\n")
+              "return to the main page\nand select option 3.\n")
 
         return_to_start()
     else:
