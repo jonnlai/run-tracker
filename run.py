@@ -247,7 +247,9 @@ def check_username():
             if username not in USER_NAMES and username != "q":
                 raise ValueError(f"{username} is not a registered username")
         except ValueError as e:
-            print(f"{Fore.RED}{e}, please try again or type 'q' to quit.")
+            print(f"{Fore.RED}{e}, please try again. If you have recently \n"
+                  "registered, please run the program again before trying"
+                   " to input your data.")
             continue
         else:
             if username == "q":
