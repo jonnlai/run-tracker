@@ -337,8 +337,6 @@ def input_data(username):
         break
 
     print(f"\n{Fore.GREEN}Thank you for adding your latest running results!")
-    print(f"{Fore.GREEN}Keep running and don't forget to come back next week"
-          " to add your results!")
 
 
 def display_next_week(username):
@@ -366,6 +364,8 @@ def display_next_week(username):
 
     print(f"\n{Fore.GREEN}You have been following this 8 week programme for "
           f"{no_of_weeks} week(s).\n")
+    print(f"{Fore.GREEN}Keep running and don't forget to come back next week"
+          " to add your results!")    
     print(f"{Fore.GREEN}Here is your next week's plan:")
     print(next_week_plan)
 
