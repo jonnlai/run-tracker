@@ -94,7 +94,7 @@ def select_plan():
     Raise a ValueError if invalid distance is given
     """
     print(f"\n{Fore.GREEN}Please select a username that is"
-          " 3-20 characters long and in lower case.")
+          " 3-15 characters long and in lower case.")
 
     while True:
         try:
@@ -102,13 +102,13 @@ def select_plan():
                              f"'q' to quit: \n").strip().lower()
             if username in USER_NAMES and username != "q":
                 raise ValueError(f"Username {username} already in use."
-                                   " Please select another username.")
-            if (len(username) < 3 or len(username) > 20) and username != "q":
+                                 " Please select another username.")
+            if (len(username) < 3 or len(username) > 15) and username != "q":
                 raise ValueError("Username needs to be 3-15 characters "
-                                   f"long.\nYou typed {username} which is"
-                                   f" {len(username)} characters long.")
+                                 f"long.\nYou typed {username} which is"
+                                 f" {len(username)} characters long.")
         except ValueError as e:
-            print(f"\n{Fore.RED}Invalid choice: {e}")
+            print(f"\n{Fore.RED}{e}")
             continue
         else:
             if username == "q":
@@ -165,8 +165,8 @@ def select_plan():
             if int(goal) > max_distance + 10:
                 raise ValueError("You are being ambitious!\nYou cannot set"
                                  " a goal that is 10k higher than your "
-                                 f"current maximum distance ({max_distance}).\n"
-                                 f" You typed: {goal}")
+                                 f"current maximum distance "
+                                 f"({max_distance}).\nYou typed: {goal}")
         except ValueError as e:
             print(f"{Fore.RED}{e}. Please try again.")
             continue
@@ -249,7 +249,7 @@ def check_username():
         except ValueError as e:
             print(f"{Fore.RED}{e}, please try again. If you have recently \n"
                   "registered, please run the program again before trying"
-                   " to input your data.")
+                  " to input your data.")
             continue
         else:
             if username == "q":
@@ -319,7 +319,7 @@ def input_data(username):
                         raise ValueError(f"Type 'y' to confirm the data is "
                                          "correct or 'n' to re-enter the data")
                 except ValueError as e:
-                    print(f"{Fore.RED}Invalid selection: {e}, please try again.")
+                    print(f"{Fore.RED}{e}, please try again.")
                     continue
                 break
 
@@ -365,7 +365,7 @@ def display_next_week(username):
     print(f"\n{Fore.GREEN}You have been following this 8 week programme for "
           f"{no_of_weeks} week(s).\n")
     print(f"{Fore.GREEN}Keep running and don't forget to come back next week"
-          " to add your results!")    
+          " to add your results!")
     print(f"{Fore.GREEN}Here is your next week's plan:")
     print(next_week_plan)
 
