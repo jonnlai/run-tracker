@@ -131,6 +131,76 @@ The warnings and errors were addressed and it was confirmed that no errors remai
 
 ![No errors](readme-files/python-linter/no-errors.png)
 
+### Manual Testing
+
+<table>
+    <tr>
+        <th>Feature</th>
+        <th>Outcome</th>
+        <th>Example</th>
+        <th>Pass/Fail</th>
+    </tr>
+    <tr>
+        <td rowspan=3>Select option</td>
+        <td>Validate if value is empty</td>
+        <td><img src=readme-files/testing/select-option-empty-test.png alt="Value is empty"></td>
+        <td>Pass</td>
+    </tr>
+    <tr>
+        <td>Validate if value is number other than 1, 2 or 3</td>
+        <td><img src=readme-files/testing/select-option-num-test.png alt="Value is number not 1,2,3"></td>
+        <td>Pass</td>
+    </tr>
+    <tr>
+        <td>Validate if value is not an integer</td>
+        <td><img src=readme-files/testing/select-option-string-test.png alt="Value is a string"></td>
+        <td>Pass</td>
+    </tr>
+    <tr>
+        <td rowspan=4>Select username</td>
+        <td>Validate if value is empty</td>
+        <td><img src=readme-files/testing/select-username-empty.png alt="Username is empty"></td>
+        <td>Pass</td>
+    </tr>
+    <tr>
+        <td>Validate if value is shorter than 3 characters</td>
+        <td><img src=readme-files/testing/select-username-short.png alt="Username is shorter than 3 char"></td>
+        <td>Pass</td>
+    </tr>
+    <tr>
+        <td>Validate if value is longer than 15 characters</td>
+        <td><img src=readme-files/testing/select-username-long.png alt="Username is longer than 15 char"></td>
+        <td>Pass</td>
+    </tr>
+        <tr>
+        <td>Validate if value is already in use</td>
+        <td><img src=readme-files/testing/select-username-in-use.png alt="Username is already in use"></td>
+        <td>Pass</td>
+    </tr>
+    <tr>
+        <td rowspan=3>Enter maximum distance</td>
+        <td>Validate if value is empty</td>
+        <td><img src=readme-files/testing/maximum-distance-empty.png alt="Max distance is empty"></td>
+        <td>Pass</td>
+    </tr>
+    <tr>
+        <td>Validate if value is not an interger</td>
+        <td><img src=readme-files/testing/maximum-distance-string.png alt="Max distance is not an interger"></td>
+        <td>Pass</td>
+    </tr>
+        <tr>
+        <td>Validate if value is over 15</td>
+        <td><img src=readme-files/testing/maximum-distance-long.png alt="Max distance is over 15"></td>
+        <td>Pass</td>
+    </tr>
+    <tr>
+        <td>Select option</td>
+        <td>Select option</td>
+        <td>Select option</td>
+        <td>Select option</td>
+    </tr>
+</table>
+
 ## Deployment
 
 The application was deployed using [Heroku](https://id.heroku.com/) and Code Institute's mock terminal.
