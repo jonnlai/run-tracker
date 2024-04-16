@@ -20,7 +20,6 @@ SHEET = GSPREAD_CLIENT.open('run-tracker')
 RESULTS = SHEET.worksheet("results")
 PLANS = SHEET.worksheet("plans")
 SELECTED_PLANS = SHEET.worksheet("user_plans")
-# USER_NAMES = SHEET.worksheet("user_plans").col_values(1)
 
 
 def welcome_user():
@@ -308,6 +307,8 @@ def input_data(username):
             if len(running_data) != 3:
                 raise ValueError("Three values required,"
                                  f" you provided {len(running_data)}")
+            if int(run) > 30:
+                raise ValueError("Expected a number less than 30")
         except ValueError as e:
             print(f"{Fore.RED}Invalid data: {e}, please try again.")
             continue
@@ -328,11 +329,11 @@ def input_data(username):
                 # Get the row number of user record
                 user_row = RESULTS.find(username).row
                 # Add running data to results worksheet
-                for data in running_data:
+                for run in running_data:
                     # number of values recorded plus 1
                     next_result = len(RESULTS.row_values(user_row))+1
                     # Add into next empty cell using row+col coords
-                    RESULTS.update_cell(user_row, next_result, data)
+                    RESULTS.update_cell(user_row, next_result, run)
             elif check_input == "n":
                 continue
         break
