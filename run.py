@@ -20,7 +20,7 @@ SHEET = GSPREAD_CLIENT.open('run-tracker')
 RESULTS = SHEET.worksheet("results")
 PLANS = SHEET.worksheet("plans")
 SELECTED_PLANS = SHEET.worksheet("user_plans")
-USER_NAMES = SHEET.worksheet("user_plans").col_values(1)
+# USER_NAMES = SHEET.worksheet("user_plans").col_values(1)
 
 
 def welcome_user():
@@ -52,7 +52,6 @@ d888888P                            88b
         print(f"{Fore.MAGENTA}1) Select a new training plan")
         print(f"{Fore.CYAN}2) Input exercise data")
         print(f"{Fore.YELLOW}3) View your progress and plan{Fore.RESET}\n")
-
         try:
             selected_option = int(input("What would you like to do? "
                                         f"({Fore.MAGENTA}1{Fore.RESET},"
@@ -97,10 +96,11 @@ def select_plan():
           " 3-15 characters long and in lower case.")
 
     while True:
+        user_names = SHEET.worksheet("user_plans").col_values(1)
         try:
             username = input(f"Please select a username or type "
                              f"'q' to quit: \n").strip().lower()
-            if username in USER_NAMES and username != "q":
+            if username in user_names and username != "q":
                 raise ValueError(f"Username {username} already in use."
                                  " Please select another username.")
             if (len(username) < 3 or len(username) > 15) and username != "q":
@@ -240,11 +240,12 @@ def check_username():
     check whether it has been registered before
     """
     while True:
+        user_names = SHEET.worksheet("user_plans").col_values(1)
         try:
             username = input("\nPlease enter your registered username"
                              " or type 'q' to quit: \n").lower()
             # Check that the username given is a registred username
-            if username not in USER_NAMES and username != "q":
+            if username not in user_names and username != "q":
                 raise ValueError(f"{username} is not a registered username")
         except ValueError as e:
             print(f"{Fore.RED}{e}, please try again. If you have recently \n"
