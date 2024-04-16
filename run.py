@@ -79,7 +79,7 @@ def return_to_start():
             if quit != "q":
                 raise ValueError(f"Expected the letter 'q'. You typed {quit}")
         except ValueError as e:
-            print(f"{Fore.RED}Invalid data: {e}, please try again.")
+            print(f"{Fore.RED}Invalid data: {e}, please try again.\n")
             continue
         else:
             if quit == "q":
@@ -156,11 +156,11 @@ def select_plan():
                 raise ValueError(f"Expected a whole number. You typed: {goal}")
             if int(goal) not in [5, 10, 15, 20]:
                 raise ValueError("Select one of the following distances:"
-                                 f" 5, 10, 15 or 20. You typed: {goal}")
+                                 f" 5, 10, 15 or 20.\nYou typed: {goal}")
             if int(goal) <= max_distance:
-                raise ValueError("Set a goal that is higher than your"
-                                 f"current maximum distance ({max_distance})"
-                                 f", you typed: {goal}")
+                raise ValueError("Set a goal that is higher than your "
+                                 f"current maximum distance ({max_distance})."
+                                 f"\nYou typed: {goal}")
             if int(goal) > max_distance + 10:
                 raise ValueError("You are being ambitious!\nYou cannot set"
                                  " a goal that is 10k higher than your "
@@ -247,9 +247,7 @@ def check_username():
             if username not in user_names and username != "q":
                 raise ValueError(f"{username} is not a registered username")
         except ValueError as e:
-            print(f"{Fore.RED}{e}, please try again. If you have recently \n"
-                  "registered, please run the program again before trying"
-                  " to input your data.")
+            print(f"{Fore.RED}{e}, please try again.")
             continue
         else:
             if username == "q":

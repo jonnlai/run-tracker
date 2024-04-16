@@ -172,7 +172,7 @@ The warnings and errors were addressed and it was confirmed that no errors remai
         <td><img src=readme-files/testing/select-username-long.png alt="Username is longer than 15 char"></td>
         <td>Pass</td>
     </tr>
-        <tr>
+    <tr>
         <td>Validate if value is already in use</td>
         <td><img src=readme-files/testing/select-username-in-use.png alt="Username is already in use"></td>
         <td>Pass</td>
@@ -191,6 +191,38 @@ The warnings and errors were addressed and it was confirmed that no errors remai
         <tr>
         <td>Validate if value is over 15</td>
         <td><img src=readme-files/testing/maximum-distance-long.png alt="Max distance is over 15"></td>
+        <td>Pass</td>
+    </tr>
+    <tr>
+        <td rowspan=3>Enter goal</td>
+        <td>Validate if value is empty</td>
+        <td><img src=readme-files/testing/goal-empty.png alt="Goal is empty"></td>
+        <td>Pass</td>
+    </tr>
+    <tr>
+        <td>Validate if value is not an interger</td>
+        <td><img src=readme-files/testing/goal-string.png alt="Goal is not an interger"></td>
+        <td>Pass</td>
+    </tr>
+        <tr>
+        <td>Validate if value is more than 10 higher than max distance</td>
+        <td><img src=readme-files/testing/goal-long.png alt="Goal is more than 10 higher than current maximum distance"></td>
+        <td>Pass</td>
+    </tr>
+        <tr>
+        <td rowspan=3>Enter data</td>
+        <td>Validate if value is empty</td>
+        <td><img src=readme-files/testing/data-empty.png alt="Data is empty"></td>
+        <td>Pass</td>
+    </tr>
+    <tr>
+        <td>Validate if value is not an interger</td>
+        <td><img src=readme-files/testing/data-string.png alt="Data is not an interger"></td>
+        <td>Pass</td>
+    </tr>
+        <tr>
+        <td>Validate if less or more than 3 values are inputted</td>
+        <td><img src=readme-files/testing/data-over4.png alt="Less or more than 3 values recorded"></td>
         <td>Pass</td>
     </tr>
     <tr>
