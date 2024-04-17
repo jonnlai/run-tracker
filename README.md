@@ -37,6 +37,17 @@ Three worksheets are being used:
 - one to store which plan each user had chosen
 - one to store the user's running data
 
+### Colour Scheme
+
+[Colorama](https://pypi.org/project/colorama/) was used to add colour to the terminal to make the application more intuitive and easier to use.
+
+The following colours were used:
+
+- The ASCII art, the name of application and all text that contain information or guidance are displayed in green.
+- Inputs and requests to input data are displayed in the default colour.
+- Errors are displayed in red.
+- The three menu options are all displayed in different colours: magenta, cyan and yellow.
+
 [Back to top](#run-tracker)
 
 ## Features
