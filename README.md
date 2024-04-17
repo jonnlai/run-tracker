@@ -148,6 +148,25 @@ The "results" worksheet holds all the usernames and the runs that the users have
 
 ## Testing
 
+### Testing User Stories
+
+- As someone new to running, I want an easy to follow plan that gives me the weekly structure that I need in order to be able to start running.
+
+  - The application gives the user a week plan that helps them to structure their week.
+
+- As a beginner or intermediate runner, I want a programme that helps me to push my limits and get better results.
+
+  - The application offers four different plans with different difficulty levels.
+
+- As a user of the application, I want to be able to store my running data.
+
+  - The application stores the data that user inputs.
+  - The application validates the data to ensure that the data inputted is correct.
+
+- As a user of the application, I want to be able to view my progress and compare that to my plan.
+  - The application allows the user to view their weekly progress.
+  - The application allows the user to view their plan whenever they want so that they can compere that to their results.
+
 ### Code Validation
 
 [CI Python Linter](https://pep8ci.herokuapp.com/#) was used to validate the Python code for PEP8 requirements.
