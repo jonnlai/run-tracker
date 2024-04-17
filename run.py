@@ -306,7 +306,7 @@ def input_data(username):
                 raise ValueError("Three values required,"
                                  f" you provided {len(running_data)}")
             if int(run) > 30:
-                raise ValueError("Expected a number less than 30")
+                raise ValueError("Each value needs to less than 30")
         except ValueError as e:
             print(f"{Fore.RED}Invalid data: {e}, please try again.")
             continue

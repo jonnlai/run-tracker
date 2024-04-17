@@ -107,6 +107,10 @@ Asks the user to input their username and if the username is recognised, allows 
 
 - [Colorama](https://pypi.org/project/colorama/) library was used to apply color to the terminal text.
 
+- [Google Sheets](https://docs.google.com/spreadsheets) was used to store the data.
+
+- [Gspread](https://docs.gspread.org/en/v6.0.0/) library was used to read and write Google Sheets.
+
 [Back to top](#run-tracker)
 
 ## Testing
@@ -188,7 +192,7 @@ The warnings and errors were addressed and it was confirmed that no errors remai
         <td><img src=readme-files/testing/maximum-distance-string.png alt="Max distance is not an interger"></td>
         <td>Pass</td>
     </tr>
-        <tr>
+    <tr>
         <td>Validate if value is over 15</td>
         <td><img src=readme-files/testing/maximum-distance-long.png alt="Max distance is over 15"></td>
         <td>Pass</td>
@@ -204,13 +208,24 @@ The warnings and errors were addressed and it was confirmed that no errors remai
         <td><img src=readme-files/testing/goal-string.png alt="Goal is not an interger"></td>
         <td>Pass</td>
     </tr>
-        <tr>
+    <tr>
         <td>Validate if value is more than 10 higher than max distance</td>
         <td><img src=readme-files/testing/goal-long.png alt="Goal is more than 10 higher than current maximum distance"></td>
         <td>Pass</td>
     </tr>
         <tr>
-        <td rowspan=3>Enter data</td>
+        <td rowspan=2>Enter username</td>
+        <td>Validate if value is not a registered username</td>
+        <td><img src=readme-files/testing/enter-username-not-registered.png alt="Not a registered username"></td>
+        <td>Pass</td>
+    </tr>
+    <tr>
+        <td>Validate if the user has already finished the programme</td>
+        <td><img src=readme-files/testing/username-finished.png alt="User has finished the programme"></td>
+        <td>Pass</td>
+    </tr>
+    <tr>
+        <td rowspan=4>Enter data</td>
         <td>Validate if value is empty</td>
         <td><img src=readme-files/testing/data-empty.png alt="Data is empty"></td>
         <td>Pass</td>
@@ -220,16 +235,27 @@ The warnings and errors were addressed and it was confirmed that no errors remai
         <td><img src=readme-files/testing/data-string.png alt="Data is not an interger"></td>
         <td>Pass</td>
     </tr>
-        <tr>
+    <tr>
         <td>Validate if less or more than 3 values are inputted</td>
         <td><img src=readme-files/testing/data-over4.png alt="Less or more than 3 values recorded"></td>
         <td>Pass</td>
     </tr>
     <tr>
-        <td>Select option</td>
-        <td>Select option</td>
-        <td>Select option</td>
-        <td>Select option</td>
+        <td>Validate if any of the values of over 30</td>
+        <td><img src=readme-files/testing/data-big-int.png alt="One or more values over 30"></td>
+        <td>Pass</td>
+    </tr>
+    <tr>
+        <td>Confirm the data</td>
+        <td>Validate if value is not 'y' or 'n'</td>
+        <td><img src=readme-files/testing/confirm-not-y-n.png alt="Value is not the letter 'y' or 'n'"></td>
+        <td>Pass</td>
+    </tr>
+    <tr>
+        <td>Return to main menu</td>
+        <td>Validate if value is not 'q'</td>
+        <td><img src=readme-files/testing/return-not-q.png alt="Value is not the letter 'q'"></td>
+        <td>Pass</td>
     </tr>
 </table>
 
