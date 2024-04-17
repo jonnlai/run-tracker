@@ -83,6 +83,28 @@ Asks the user to input their username and if the username is recognised, allows 
 
 ![View progress](readme-files/features/view-progress.png)
 
+### Google Sheets
+
+Three worksheets have been utilised to store data.
+
+#### Plans
+
+The application offers four different running plans that are stored in the "plans" worksheet. Each row holds the name of the plan and 24 numbers (3 runs per week for 8 weeks) that the indicate the distances the user should run to achieve their goal in 8 weeks.
+
+![Plans](readme-files/features/sheet-plans.png)
+
+#### User Plans
+
+The "user_plans" worksheet holds all the usernames and the number of the plan that each user is following.
+
+![User plans](readme-files/features/sheet-user-plans.png)
+
+#### Results
+
+The "results" worksheet holds all the usernames and the runs that the users have recorded.
+
+![Results](readme-files/features/sheet-results.png)
+
 [Back to top](#run-tracker)
 
 ## Technologies Used
@@ -91,7 +113,7 @@ Asks the user to input their username and if the username is recognised, allows 
 
 - [Python3](https://www.python.org/)
 
-### Frameworks, Libraries and Programs Used
+### Frameworks, Libraries and Programmes Used
 
 - [Lucid](https://lucid.app/) was used to create the programme flowchart.
 
