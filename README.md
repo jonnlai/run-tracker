@@ -250,7 +250,7 @@ The warnings and errors were addressed and it was confirmed that no errors remai
         <td>Pass</td>
     </tr>
     <tr>
-        <td rowspan=3>Enter goal</td>
+        <td rowspan=5>Enter goal</td>
         <td>Validate if value is empty</td>
         <td><img src=readme-files/testing/goal-empty.png alt="Goal is empty"></td>
         <td>Pass</td>
@@ -258,6 +258,16 @@ The warnings and errors were addressed and it was confirmed that no errors remai
     <tr>
         <td>Validate if value is not an interger</td>
         <td><img src=readme-files/testing/goal-string.png alt="Goal is not an interger"></td>
+        <td>Pass</td>
+    </tr>
+    <tr>
+        <td>Validate if value not 5, 10, 15 or 20</td>
+        <td><img src=readme-files/testing/goal-over20.png alt="Goal is not 5, 10, 15 or 20"></td>
+        <td>Pass</td>
+    </tr>
+    <tr>
+        <td>Validate if value not the same or less than maximum distance</td>
+        <td><img src=readme-files/testing/goal-short.png alt="Goal is not more than maximum distance"></td>
         <td>Pass</td>
     </tr>
     <tr>
@@ -310,6 +320,10 @@ The warnings and errors were addressed and it was confirmed that no errors remai
         <td>Pass</td>
     </tr>
 </table>
+
+### Solved Bugs
+
+- It was necessary to refresh the page/re-run the programme after creating a username in order to be able to input data as otherwise the application did not recognise the username. This also meant that it was possible to create the same username twice. This issue was fixed by assigning the list of usernames fetched from Google Sheet to local variable instead of global variable at the beginning.
 
 ## Deployment
 
