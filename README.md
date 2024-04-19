@@ -2,9 +2,18 @@
 
 ![Mockup image](readme-files/mockup-image.png)
 
-Run tracker allows users to learn to run 5-20 kilometers. The application recommends the user a training plan and allows then track and view their progress.
+Run Tracker helps the users to learn to run 5-20 kilometers. The application recommends the user a training plan and allows then track and view their progress.
 
 The deployed project can be found here: [Run Tracker](https://running-programme-694cea56c7e6.herokuapp.com/)
+
+## Table of Content
+
+1. [User Experience (UX)](#user-experience-ux)
+2. [Features](#features)
+3. [Technologies Used](#technologies-used)
+4. [Testing](#testing)
+5. [Deployment](#deployment)
+6. [Credits](#credits)
 
 ## User Experience (UX)
 
@@ -324,6 +333,9 @@ The warnings and errors were addressed and it was confirmed that no errors remai
 ### Solved Bugs
 
 - It was necessary to refresh the page/re-run the programme after creating a username in order to be able to input data as otherwise the application did not recognise the username. This also meant that it was possible to create the same username twice. This issue was fixed by assigning the list of usernames fetched from Google Sheet to local variable instead of global variable at the beginning.
+- After returning to the main menu, it was not possible to use any of the other function because return_to_start function because the function called the welcome_user function instead of the main function.
+- Exception handling of the question asking the user to confirm that they have correctly inputted their running data took the user back to input their data if they entered an invalid value instead of asking the again whether or not the data is correct. This was fixed by adding another while loop inside the input_data function.
+- After importing Colorama, ModuleNotFoundError was received when trying to use the deployed application. This bug was solved by updating the requirements.txt file to include Colorama.
 
 ## Deployment
 
