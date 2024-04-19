@@ -2,7 +2,7 @@
 
 ![Mockup image](readme-files/mockup-image.png)
 
-Run Tracker helps the users to learn to run 5-20 kilometers. The application recommends the user a training plan and allows then track and view their progress.
+Run Tracker helps users learn to run 5, 10, 15 or 20 kilometers in 8-weeks. The application recommends a training plan and allows the user to track and view their progress. The users are asked to return weekly to input that week's running data (i.e. their last three runs).
 
 The deployed project can be found here: [Run Tracker](https://running-programme-694cea56c7e6.herokuapp.com/)
 
@@ -19,14 +19,14 @@ The deployed project can be found here: [Run Tracker](https://running-programme-
 
 ### Project Goals
 
-- Help users to improve their fitness level by providing users an easy way to start running or to increase the distance they can run.
-- Allow users to track their their progress for the duration of the programme.
-- Validate the data the user inputs to ensure that the programme works correct and provides good user experience.
+- Help users improve their fitness level by providing them with an easy way to start running or to increase the distance they can run.
+- Allow users to track their progress for the duration of the programme.
+- Validate the data the user inputs to ensure that the programme works correctly and provides a good user experience.
 
 ### User Stories
 
-- As someone new to running, I want an easy to follow plan that gives me the weekly structure that I need in order to be able to start running.
-- As a beginner or intermediate runner, I want a programme that helps me to push my limits and get better results.
+- As someone new to running, I want an easy-to-follow plan that gives me the weekly structure that I need in order to be able to start running.
+- As a beginner or intermediate runner, I want a programme that helps me push my limits and get better results.
 - As a user of the application, I want to be able to store my running data.
 - As a user of the application, I want to be able to view my progress and compare that to my plan.
 
@@ -38,13 +38,13 @@ A flowchart to plan the logic of the programme was created using [Lucid](https:/
 
 ### Data Model
 
-The data that user inputs is initially stored as variables. Once all the necessary data has been inputted by the user and it has been validated, the data is added to a Google Sheets.
+The data that the user inputs is initially stored as variables. Once all the necessary data has been inputted by the user and validated, it is added to a Google Sheets.
 
 Three worksheets are being used:
 
 - one to store the four different running plans that the programme offers
-- one to store which plan each user had chosen
-- one to store the user's running data
+- one to store which plan each user has chosen
+- one to store the user's weekly running data
 
 ### Colour Scheme
 
@@ -52,10 +52,10 @@ Three worksheets are being used:
 
 The following colours were used:
 
-- The ASCII art, the name of application and all text that contain information or guidance are displayed in green.
+- The ASCII art, the name of the application, and all text that contains information or guidance are displayed in green.
 - Inputs and requests to input data are displayed in the default colour.
 - Errors are displayed in red.
-- The three menu options are all displayed in different colours: magenta, cyan and yellow.
+- The three menu options are all displayed in different colours: magenta, cyan, and yellow.
 
 [Back to top](#run-tracker)
 
@@ -69,47 +69,47 @@ The user is given information about the application and is asked to select an op
 
 ### Select plan
 
-Collects information from the user in order to be able to select the most suitable plan for them based on the maximum distance that the user can currently run and their goal. Adds the username and the user's select plan to Google Sheets.
+This function asks the user to select a username and collects information from the user in order to be able to select the most suitable plan for them based on the maximum distance that the user can currently run and their goal. The username and the user's selected plan are added to Google Sheets.
 
 ![Select plan](readme-files/features/select-plan.png)
 
 ### View plan
 
-Displays the selected 8-week plan to the user and advises user when to return to input their results.
+This function displays the selected 8-week plan to the user and advises them when to return to input their results.
 
 ![View plan](readme-files/features/view-plan.png)
 
 ### Input data
 
-Asks the user to input their username and if the username is recognised, allows the user to input previous week's running data.
+This function asks the user to input their username, and if the username is recognised, it allows the user to input their previous week's running data.
 
 ![Input data](readme-files/features/input-data.png)
 
 ### Next week's plan
 
-After the user has added their latest running data, next week's plan is displayed to user, and their encouraged to keep following the running programme and to return the following week to add that week's results.
+After the user has added their latest running data, next week's plan is displayed to the user, and they are encouraged to keep following the running programme and to return the following week to add that week's results.
 
 ![Next week](readme-files/features/next-week.png)
 
 ### Programme finished
 
-Inform the user that they have finished the programme and advises them to how they can view their results.
+This informs the user that they have finished the programme and advises them how they can view their results.
 
 ![Programme finished](readme-files/features/programme-finished.png)
 
 ### View progress
 
-Asks the user to input their username and if the username is recognised, allows the user to view their results and their plan.
+This function asks the user to input their username, and if the username is recognised, it allows the user to view their results and their plan.
 
 ![View progress](readme-files/features/view-progress.png)
 
 ### Google Sheets
 
-Three worksheets have been utilised to store data.
+Three worksheets have been used to store data.
 
 #### Plans
 
-The application offers four different running plans that are stored in the "plans" worksheet. Each row holds the name of the plan and 24 numbers (3 runs per week for 8 weeks) that the indicate the distances the user should run to achieve their goal in 8 weeks.
+The application offers four different running plans that are stored in the "plans" worksheet. Each row holds the name of the plan and 24 numbers (3 runs per week for 8 weeks) that indicate the distances the user should run to achieve their goal in 8 weeks.
 
 ![Plans](readme-files/features/sheet-plans.png)
 
@@ -133,7 +133,7 @@ The "results" worksheet holds all the usernames and the runs that the users have
 
 - [Python3](https://www.python.org/)
 
-### Frameworks, Libraries and Programmes Used
+### Frameworks, Libraries, and Programmes Used
 
 - [Lucid](https://lucid.app/) was used to create the programme flowchart.
 
@@ -145,9 +145,9 @@ The "results" worksheet holds all the usernames and the runs that the users have
 
 - [CI Python Linter](https://pep8ci.herokuapp.com/#) was used to validate the Python code.
 
-- [Tabulate](https://pypi.org/project/tabulate/) library was used to present the data in a table format.
+- [Tabulate](https://pypi.org/project/tabulate/) library was used to present the data in table format.
 
-- [Colorama](https://pypi.org/project/colorama/) library was used to apply color to the terminal text.
+- [Colorama](https://pypi.org/project/colorama/) library was used to apply colour to the terminal text.
 
 - [Google Sheets](https://docs.google.com/spreadsheets) was used to store the data.
 
@@ -159,28 +159,28 @@ The "results" worksheet holds all the usernames and the runs that the users have
 
 ### Testing User Stories
 
-- As someone new to running, I want an easy to follow plan that gives me the weekly structure that I need in order to be able to start running.
+- As someone new to running, I want an easy-to-follow plan that gives me the weekly structure that I need in order to be able to start running.
 
-  - The application gives the user a week plan that helps them to structure their week.
+  - The application gives the user a weekly plan that helps them structure their week.
 
-- As a beginner or intermediate runner, I want a programme that helps me to push my limits and get better results.
+- As a beginner or intermediate runner, I want a programme that helps me push my limits and get better results.
 
   - The application offers four different plans with different difficulty levels.
 
 - As a user of the application, I want to be able to store my running data.
 
-  - The application stores the data that user inputs.
+  - The application stores the data that the user inputs.
   - The application validates the data to ensure that the data inputted is correct.
 
 - As a user of the application, I want to be able to view my progress and compare that to my plan.
   - The application allows the user to view their weekly progress.
-  - The application allows the user to view their plan whenever they want so that they can compere that to their results.
+  - The application allows the user to view their plan whenever they want so that they can compare that to their results.
 
 ### Code Validation
 
 [CI Python Linter](https://pep8ci.herokuapp.com/#) was used to validate the Python code for PEP8 requirements.
 
-The code was validated for the first time, the following warning and error messages were received.
+When the code was validated for the first time, the following warning and error messages were received:
 
 ![Python Linter 1](readme-files/python-linter/python-linter-1.png)
 ![Python Linter 2](readme-files/python-linter/python-linter-2.png)
@@ -192,7 +192,7 @@ The code was validated for the first time, the following warning and error messa
 ![Python Linter 8](readme-files/python-linter/python-linter-8.png)
 ![Python Linter 9](readme-files/python-linter/python-linter-9.png)
 
-The warnings and errors were addressed and it was confirmed that no errors remained.
+The warnings and errors were addressed, and it was confirmed that no errors remained. The code was validated again when the development had finished, confirming that it contained no errors.
 
 ![No errors](readme-files/python-linter/no-errors.png)
 
@@ -212,8 +212,8 @@ The warnings and errors were addressed and it was confirmed that no errors remai
         <td>Pass</td>
     </tr>
     <tr>
-        <td>Validate if value is number other than 1, 2 or 3</td>
-        <td><img src=readme-files/testing/select-option-num-test.png alt="Value is number not 1,2,3"></td>
+        <td>Validate if value is an integer other than 1, 2 or 3</td>
+        <td><img src=readme-files/testing/select-option-num-test.png alt="Value is an integer not 1,2,3"></td>
         <td>Pass</td>
     </tr>
     <tr>
@@ -265,23 +265,23 @@ The warnings and errors were addressed and it was confirmed that no errors remai
         <td>Pass</td>
     </tr>
     <tr>
-        <td>Validate if value is not an interger</td>
-        <td><img src=readme-files/testing/goal-string.png alt="Goal is not an interger"></td>
+        <td>Validate if value is not an integer</td>
+        <td><img src=readme-files/testing/goal-string.png alt="Goal is not an integer"></td>
         <td>Pass</td>
     </tr>
     <tr>
-        <td>Validate if value not 5, 10, 15 or 20</td>
+        <td>Validate if value is not 5, 10, 15, or 20</td>
         <td><img src=readme-files/testing/goal-over20.png alt="Goal is not 5, 10, 15 or 20"></td>
         <td>Pass</td>
     </tr>
     <tr>
-        <td>Validate if value not the same or less than maximum distance</td>
+        <td>Validate if value is not more than maximum distance</td>
         <td><img src=readme-files/testing/goal-short.png alt="Goal is not more than maximum distance"></td>
         <td>Pass</td>
     </tr>
     <tr>
-        <td>Validate if value is more than 10 higher than max distance</td>
-        <td><img src=readme-files/testing/goal-long.png alt="Goal is more than 10 higher than current maximum distance"></td>
+        <td>Validate if value is more than 10 higher than the maxixum distance</td>
+        <td><img src=readme-files/testing/goal-long.png alt="Goal is more than 10 higher than the current maximum distance"></td>
         <td>Pass</td>
     </tr>
         <tr>
@@ -302,8 +302,8 @@ The warnings and errors were addressed and it was confirmed that no errors remai
         <td>Pass</td>
     </tr>
     <tr>
-        <td>Validate if value is not an interger</td>
-        <td><img src=readme-files/testing/data-string.png alt="Data is not an interger"></td>
+        <td>Validate if value is not an integer</td>
+        <td><img src=readme-files/testing/data-string.png alt="Data is not an integer"></td>
         <td>Pass</td>
     </tr>
     <tr>
@@ -312,7 +312,7 @@ The warnings and errors were addressed and it was confirmed that no errors remai
         <td>Pass</td>
     </tr>
     <tr>
-        <td>Validate if any of the values of over 30</td>
+        <td>Validate if any of the values are over 30</td>
         <td><img src=readme-files/testing/data-big-int.png alt="One or more values over 30"></td>
         <td>Pass</td>
     </tr>
@@ -332,9 +332,9 @@ The warnings and errors were addressed and it was confirmed that no errors remai
 
 ### Solved Bugs
 
-- It was necessary to refresh the page/re-run the programme after creating a username in order to be able to input data as otherwise the application did not recognise the username. This also meant that it was possible to create the same username twice. This issue was fixed by assigning the list of usernames fetched from Google Sheet to local variable instead of global variable at the beginning.
-- After returning to the main menu, it was not possible to use any of the other function because return_to_start function because the function called the welcome_user function instead of the main function.
-- Exception handling of the question asking the user to confirm that they have correctly inputted their running data took the user back to input their data if they entered an invalid value instead of asking the again whether or not the data is correct. This was fixed by adding another while loop inside the input_data function.
+- It was necessary to refresh the page/re-run the programme after creating a username in order to be able to input data, as otherwise the application would not recognise the username. This also meant that it was possible to create the same username twice. This issue was fixed by assigning the list of usernames fetched from Google Sheet to a local variable instead of a global variable at the beginning.
+- After returning to the main menu, it was not possible to use any of the other functions because the return_to_start function called the welcome_user function instead of the main function.
+- Exception handling of the question asking the user to confirm that they have correctly inputted their running data took the user back to input their data if they entered an invalid value instead of asking again whether or not the data is correct. This was fixed by adding another while loop inside the input_data function.
 - After importing Colorama, ModuleNotFoundError was received when trying to use the deployed application. This bug was solved by updating the requirements.txt file to include Colorama.
 
 ## Deployment
@@ -369,6 +369,6 @@ All content was created by the developer.
 
 - [Geeksforgeeks](https://www.geeksforgeeks.org/how-to-make-a-table-in-python/) was consulted to learn how how to create a table in Python
 
-- [Stackoverflow](https://stackoverflow.com/questions/287871/how-do-i-print-colored-text-to-the-terminal#287944) was consulted to learn how to add color to the text
+- [Stackoverflow](https://stackoverflow.com/questions/287871/how-do-i-print-colored-text-to-the-terminal#287944) was consulted to learn how to add colour to the text.
 
-- Code Institute's Love Sandwiches walkthrough project inspired this project and the steps of how to connect Python to Google Sheets were taken from it.
+- Code Institute's Love Sandwiches walkthrough project inspired this project, and the steps for connecting Python to Google Sheets were taken from it.
