@@ -125,7 +125,7 @@ def select_plan():
     while True:
         try:
             max_distance = int(input(f"What's the maximum distance"
-                                     " in kilometers\nthat you can run without"
+                                     " in kilometers that you can run\nwithout"
                                      f" stopping? (0 - 15) \n"))
             if max_distance < 0:
                 raise ValueError
@@ -150,7 +150,7 @@ def select_plan():
     """
     while True:
         goal = input("\nWhat distance (in kilometers) would you"
-                     " like to\nbe able to run: 5, 10, 15 or 20? \n")
+                     " like to be able to run:\n5, 10, 15 or 20? \n")
         try:
             if goal.isdigit() is False:
                 raise ValueError(f"Expected a whole number. You typed: {goal}")
@@ -224,13 +224,13 @@ def display_plan(plan_number):
 
     training_plan = tabulate(data, headers=header, tablefmt="grid")
 
-    print(f"\n{Fore.GREEN}We recommend that you run three days a week ensuring"
-          " that you leave at least one rest day inbetween each run.\n"
+    print(f"\n{Fore.GREEN}You should run 3 days a week leaving"
+          " at least 1 rest day in between each run.\n"
           "For example you could run every Monday, Wednesday and Saturday.\n")
-    print(f"{Fore.GREEN}Here is your training plan:\n")
+    print(f"{Fore.GREEN}Here is your training plan:")
     print(training_plan)
-    print(f"\n{Fore.GREEN}Please return once a week to input that week's"
-          " results.\n")
+    print(f"{Fore.GREEN}Please return once a week to input that week's"
+          " results.")
 
 
 def check_username():
@@ -358,14 +358,15 @@ def display_next_week(username):
     data = []
 
     data.append([f"Week {no_of_weeks+1}",
-                 next_week[0], next_week[1], next_week[2]])
+                 next_week[0] + " km", next_week[1] + " km", 
+                 next_week[2] + " km"])
 
     next_week_plan = tabulate(data, headers=header, tablefmt="grid")
 
     print(f"\n{Fore.GREEN}You have been following this 8 week programme for "
-          f"{no_of_weeks} week(s).\n")
+          f"{no_of_weeks} week(s).")
     print(f"{Fore.GREEN}Keep running and don't forget to come back next week"
-          " to add your results!")
+          " to add your results!\n")
     print(f"{Fore.GREEN}Here is your next week's plan:")
     print(next_week_plan)
 
@@ -408,8 +409,7 @@ def view_progress(username):
             view_plan = input("\nWould you like to view"
                               " your plan? (y/n) \n").lower()
             if view_plan != "y" and view_plan != "n":
-                raise ValueError(f"Expected the letter 'y' or 'n'."
-                                 f" You entered {view_plan}")
+                raise ValueError(f"Expected the letter 'y' or 'n'.")
         except ValueError as e:
             print(f"{Fore.RED}Invalid option: {e}, please try again.")
             continue
