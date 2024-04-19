@@ -372,3 +372,5 @@ All content was created by the developer.
 - [Stackoverflow](https://stackoverflow.com/questions/287871/how-do-i-print-colored-text-to-the-terminal#287944) was consulted to learn how to add colour to the text.
 
 - Code Institute's Love Sandwiches walkthrough project inspired this project, and the steps for connecting Python to Google Sheets were taken from it.
+
+[Back to top](#run-tracker)
